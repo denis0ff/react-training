@@ -1,7 +1,7 @@
 import { Component } from 'react';
-import { CardList } from '../components/CardList/CardList';
-import { Search } from '../components/Search/Search';
-import { EmptyProps, IStateWord } from '../utils/types';
+import { CardList } from '../../components/CardList/CardList';
+import { Search } from '../../components/Search/Search';
+import { EmptyProps, IStateWord } from '../../utils/types';
 
 export class Main extends Component<EmptyProps> {
   readonly state: IStateWord;

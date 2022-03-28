@@ -1,0 +1,8 @@
+.card_list {
+  padding: 1em 0;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5em;
+}
