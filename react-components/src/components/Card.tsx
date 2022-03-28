@@ -2,20 +2,17 @@ import { Component } from 'react';
 import './Card.css';
 import { ICard } from '../utils/types';
 
-export class Card extends Component {
-  constructor(props: ICard) {
-    super(props);
-  }
+export class Card extends Component<ICard> {
   render = () => (
     <div className="card">
-      <img className="card_image"></img>
-      <h3 className="card_title"></h3>
-      <p className="card_description"></p>
+      <img className="card_image" src={this.props.image}></img>
+      <h3 className="card_title">{this.props.title}</h3>
+      <p className="card_description">{this.props.description}</p>
       <div className="horizontal center container">
-        <span className="card_rate"></span>
-        <span className="card_count"></span>
+        <span className="card_rate">{this.props.rating.rate}</span>
+        <span className="card_count">{this.props.rating.count}</span>
       </div>
-      <h4 className="card_price"></h4>
+      <h4 className="card_price">{this.props.price}</h4>
     </div>
   );
 }

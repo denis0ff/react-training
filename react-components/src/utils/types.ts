@@ -16,3 +16,9 @@ export interface ICard {
   };
   image: string;
 }
+
+export type EmptyProps = Record<string, never>;
+
+export interface IStateWord {
+  searchWord: string;
+}
