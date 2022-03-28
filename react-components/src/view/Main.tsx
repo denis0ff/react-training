@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import { CardList } from '../components/CardList';
-import { SearchBar } from '../components/SearchBar';
+import { CardList } from '../components/CardList/CardList';
+import { Search } from '../components/Search/Search';
 import { EmptyProps, IStateWord } from '../utils/types';
 
 export class Main extends Component<EmptyProps> {
@@ -21,7 +21,7 @@ export class Main extends Component<EmptyProps> {
 
   render = () => (
     <>
-      <SearchBar searchWord={this.state.searchWord} setSearchWord={this.setState}></SearchBar>
+      <Search searchWord={this.state.searchWord} setSearchWord={this.setState}></Search>
       <CardList searchWord={this.state.searchWord}></CardList>
     </>
   );
