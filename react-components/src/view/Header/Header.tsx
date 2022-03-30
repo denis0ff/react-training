@@ -8,10 +8,10 @@ export class Header extends Component {
     <header className="header horizontal">
       <nav className="header_nav">
         <NavLink className="header_link" to={Paths.MAIN}>
-          Главная
+          Main
         </NavLink>
         <NavLink className="header_link" to={Paths.ABOUT_US}>
-          О нас
+          About Us
         </NavLink>
       </nav>
     </header>

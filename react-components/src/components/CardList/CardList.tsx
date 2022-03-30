@@ -1,51 +1,39 @@
 import { Component } from 'react';
-import { ICard } from '../../utils/types';
+import { EmptyProps, ICard } from '../../utils/types';
 import { Card } from '../Card/Card';
 import './CardList.css';
+import { data } from '../../utils/data';
 
-export interface IStateCards {
-  cards: null | ICard[];
-}
-
-interface IProps {
-  searchWord: Readonly<string>;
-}
-
-export class CardList extends Component<IProps> {
-  readonly state: IStateCards;
-  constructor(props: IProps) {
+export class CardList extends Component {
+  state: { cards: ICard[] };
+  constructor(props: EmptyProps) {
     super(props);
-    this.state = { cards: null };
+    this.state = { cards: [] };
     this.setState = this.setState.bind(this);
   }
 
-  getCards = () =>
-    fetch('https://fakestoreapi.com/products')
-      .then((res) => res.json())
-      .then((json) => this.setState((prev) => ({ ...prev, cards: json })));
-
   componentDidMount = () => {
-    this.getCards();
+    this.setState((prev) => ({ ...prev, cards: data }));
+  };
+
+  componentWillUnmount = () => {
+    this.setState((prev) => ({ ...prev, cards: [] }));
   };
 
   render = () => (
     <ul className="card_list">
-      {this.state.cards !== null
-        ? this.state.cards
-            .filter(({ title }) => title.includes(this.props.searchWord))
-            .map(({ id, title, description, price, category, rating, image }) => (
-              <Card
-                key={id}
-                id={id}
-                title={title}
-                description={description}
-                price={price}
-                category={category}
-                rating={rating}
-                image={image}
-              />
-            ))
-        : null}
+      {this.state.cards.map(({ id, title, description, price, category, rating, image }) => (
+        <Card
+          key={id}
+          id={id}
+          title={title}
+          description={description}
+          price={price}
+          category={category}
+          rating={rating}
+          image={image}
+        />
+      ))}
     </ul>
   );
 }
