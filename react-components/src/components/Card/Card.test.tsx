@@ -30,7 +30,6 @@ describe('Card component', () => {
     );
 
     expect(screen.getByText(/Mens Cotton Jacket/i)).toBeInTheDocument;
-    expect(screen.getByText(/Slim-fitting style, contrast raglan long sleeve/i)).toBeInTheDocument;
     expect(screen.getByText(/men's clothing/i)).toBeInTheDocument;
     expect(screen.getByText(/22.3/i)).toBeInTheDocument;
     expect(screen.getByText(/4.1/i)).toBeInTheDocument;

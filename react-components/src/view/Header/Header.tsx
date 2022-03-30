@@ -5,7 +5,7 @@ import './Header.css';
 
 export class Header extends Component {
   render = () => (
-    <header className="header horizontal">
+    <header className="header">
       <nav className="header_nav">
         <NavLink className="header_link" to={Paths.MAIN}>
           Main

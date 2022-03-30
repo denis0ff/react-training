@@ -1,5 +1,6 @@
-import { ChangeEvent, Component } from 'react';
+import { Component } from 'react';
 import { EmptyProps } from '../../utils/types';
+import './Search.css';
 
 export class Search extends Component {
   readonly state: { searchWord: '' };
@@ -24,11 +25,18 @@ export class Search extends Component {
   };
 
   render = () => (
-    <input
-      type="search"
-      placeholder="Search..."
-      value={this.state.searchWord || ''}
-      onChange={this.handleChangeInput}
-    />
+    <div className="search_wrapper">
+      <label htmlFor="search" className="search_label">
+        Search
+      </label>
+      <input
+        id="search"
+        className="search_input"
+        type="search"
+        placeholder="Search..."
+        value={this.state.searchWord || ''}
+        onChange={this.handleChangeInput}
+      />
+    </div>
   );
 }
