@@ -1,6 +1,7 @@
 export enum Paths {
   MAIN = '/',
   ABOUT_US = 'about-us',
+  GENERATOR = 'generator',
   NOT_FOUND = '*',
 }
 

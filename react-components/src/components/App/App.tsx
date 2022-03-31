@@ -7,10 +7,10 @@ import { Header } from '../layouts/Header/Header';
 export class App extends Component {
   render = () => (
     <BrowserRouter>
-      <div className="main-container">
+      <main className="main-container">
         <Header />
         <AppRouter />
-      </div>
+      </main>
     </BrowserRouter>
   );
 }

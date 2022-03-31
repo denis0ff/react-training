@@ -18,6 +18,12 @@ export class NavBar extends Component {
       >
         About Us
       </NavLink>
+      <NavLink
+        className={({ isActive }) => `header_link ${isActive ? 'active_link' : ''}`}
+        to={Paths.GENERATOR}
+      >
+        Generator
+      </NavLink>
     </nav>
   );
 }
