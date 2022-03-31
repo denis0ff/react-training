@@ -5,10 +5,15 @@
 
 .header_link {
   padding: 0.5em;
-  font-weight: 600;
+  font-size: 1.2em;
+  font-weight: 700;
   text-transform: uppercase;
 }
 
 .header_link:hover {
   opacity: 0.8;
+}
+
+.active_link {
+  color: #b13849;
 }

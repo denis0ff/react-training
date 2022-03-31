@@ -1,24 +1,18 @@
 import { Component } from 'react';
-import { EmptyProps, ICard } from '../../utils/types';
-import { Card } from '../Card/Card';
+import { ICard } from '../../utils/types';
+import { Card } from './components/Card/Card';
 import './CardList.css';
-import { data } from '../../utils/data';
 
-export class CardList extends Component {
+interface IProps {
+  data: ICard[];
+}
+
+export class CardList extends Component<IProps> {
   state: { cards: ICard[] };
-  constructor(props: EmptyProps) {
+  constructor(props: IProps) {
     super(props);
-    this.state = { cards: [] };
-    this.setState = this.setState.bind(this);
+    this.state = { cards: this.props.data };
   }
-
-  componentDidMount = () => {
-    this.setState((prev) => ({ ...prev, cards: data }));
-  };
-
-  componentWillUnmount = () => {
-    this.setState((prev) => ({ ...prev, cards: [] }));
-  };
 
   render = () => (
     <ul className="card_list">

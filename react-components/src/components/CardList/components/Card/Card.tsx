@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import './Card.css';
-import { ICard } from '../../utils/types';
+import { ICard } from '../../../../utils/types';
 
 export class Card extends Component<ICard> {
   render = () => (

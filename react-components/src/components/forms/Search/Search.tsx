@@ -1,20 +1,13 @@
 import { Component } from 'react';
-import { EmptyProps } from '../../utils/types';
+import { EmptyProps } from '../../../utils/types';
 import './Search.css';
 
 export class Search extends Component {
-  readonly state: { searchWord: '' };
+  readonly state: { searchWord: string };
   constructor(props: EmptyProps) {
     super(props);
-    this.state = { searchWord: '' };
-    this.setState = this.setState.bind(this);
+    this.state = { searchWord: localStorage.getItem('searchWord') || '' };
   }
-
-  componentDidMount = () => {
-    this.setState({
-      searchWord: localStorage.getItem('searchWord')?.toString(),
-    });
-  };
 
   componentWillUnmount = () => {
     localStorage.setItem('searchWord', this.state.searchWord);

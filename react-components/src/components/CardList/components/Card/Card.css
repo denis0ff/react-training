@@ -49,7 +49,7 @@
   right: 1.7rem;
   width: 1.5rem;
   height: 1.5rem;
-  background: center / contain no-repeat url('/public/star.svg');
+  background: center / contain no-repeat url('/public/images/icons/star.svg');
 }
 
 .card_count > span {

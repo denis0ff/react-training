@@ -11,7 +11,7 @@
   right: 0.5rem;
   width: 1.5rem;
   height: 1.5rem;
-  background: center / contain no-repeat url('/public/search.svg');
+  background: center / contain no-repeat url('/public/images/icons/search.svg');
 }
 
 .search_label {
