@@ -19,3 +19,15 @@ export interface ICard {
 }
 
 export type EmptyProps = Record<string, never>;
+
+export interface ICardGen {
+  firstName: string;
+  date: string;
+  country: string;
+  gender: string;
+  image: string;
+}
+
+export interface IGeneratorState {
+  cards: ICardGen[];
+}
