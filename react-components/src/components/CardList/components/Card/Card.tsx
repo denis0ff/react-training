@@ -2,7 +2,7 @@ import { Component } from 'react';
 import './Card.css';
 import { ICard } from '../../../../utils/types/types';
 
-export class Card extends Component<ICard> {
+class Card extends Component<ICard> {
   render = () => (
     <li className="card">
       <img className="card_image" src={this.props.image}></img>
@@ -18,3 +18,5 @@ export class Card extends Component<ICard> {
     </li>
   );
 }
+
+export default Card;

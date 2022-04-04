@@ -1,13 +1,13 @@
 import { Component } from 'react';
 import { ICard } from '../../utils/types/types';
-import { Card } from './components/Card/Card';
+import Card from './components/Card';
 import './CardList.css';
 
 interface IProps {
   data: ICard[];
 }
 
-export class CardList extends Component<IProps> {
+class CardList extends Component<IProps> {
   state: { cards: ICard[] };
   constructor(props: IProps) {
     super(props);
@@ -31,3 +31,5 @@ export class CardList extends Component<IProps> {
     </ul>
   );
 }
+
+export default CardList;

@@ -1,12 +1,12 @@
 import { Component } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Paths } from '../../../utils/types/types';
-import { AboutUs } from '../AboutUs/AboutUs';
-import { Generator } from '../Generator/Generator';
-import { Main } from '../Main/Main';
-import { NotFound } from '../NotFound/NotFound';
+import AboutUs from '../AboutUs';
+import Generator from '../Generator';
+import Main from '../Main';
+import NotFound from '../NotFound';
 
-export class AppRouter extends Component {
+class AppRouter extends Component {
   render = () => (
     <Routes>
       <Route path={Paths.MAIN} element={<Main />} />
@@ -16,3 +16,5 @@ export class AppRouter extends Component {
     </Routes>
   );
 }
+
+export default AppRouter;

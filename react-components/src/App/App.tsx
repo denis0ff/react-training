@@ -1,10 +1,10 @@
 import { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import './App.css';
-import { AppRouter } from '../components/pages/AppRouter/AppRouter';
-import { Header } from '../components/layouts/Header/Header';
+import AppRouter from '../components/pages/AppRouter';
+import Header from '../components/layouts/Header';
 
-export class App extends Component {
+class App extends Component {
   render = () => (
     <BrowserRouter>
       <main className="main-container">
@@ -14,3 +14,5 @@ export class App extends Component {
     </BrowserRouter>
   );
 }
+
+export default App;

@@ -1,11 +1,13 @@
 import { Component } from 'react';
-import { NavBar } from '../NavBar/NavBar';
+import NavBar from '../NavBar';
 import './Header.css';
 
-export class Header extends Component {
+class Header extends Component {
   render = () => (
     <header className="header">
       <NavBar />
     </header>
   );
 }
+
+export default Header;

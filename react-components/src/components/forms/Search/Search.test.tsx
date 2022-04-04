@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Search } from './Search';
+import Search from './Search';
 
 describe('Search component', () => {
   const searchWord = 'test search 123';

@@ -1,9 +1,9 @@
 import { Component } from 'react';
 import { EmptyProps, IGeneratorState } from '../../../utils/types/types';
-import { CardGen } from '../../CardGen/CardGen';
-import { Form } from '../../forms/Form/Form';
+import CardGen from '../../CardGen/';
+import Form from '../../forms/Form';
 
-export class Generator extends Component {
+class Generator extends Component {
   readonly state: IGeneratorState;
   constructor(props: EmptyProps) {
     super(props);
@@ -29,3 +29,5 @@ export class Generator extends Component {
     </section>
   );
 }
+
+export default Generator;

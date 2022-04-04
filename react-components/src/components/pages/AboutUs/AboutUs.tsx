@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import './AboutUs.css';
 
-export class AboutUs extends Component {
+class AboutUs extends Component {
   render = () => (
     <section>
       <h2>About us</h2>
@@ -12,3 +12,5 @@ export class AboutUs extends Component {
     </section>
   );
 }
+
+export default AboutUs;

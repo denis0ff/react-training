@@ -1,9 +1,9 @@
 import { Component } from 'react';
-import { CardList } from '../../CardList/CardList';
-import { Search } from '../../forms/Search/Search';
+import CardList from '../../CardList/CardList';
+import Search from '../../forms/Search/Search';
 import { data } from '../../../utils/data/data';
 
-export class Main extends Component {
+class Main extends Component {
   render = () => (
     <>
       <Search />
@@ -11,3 +11,5 @@ export class Main extends Component {
     </>
   );
 }
+
+export default Main;

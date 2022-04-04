@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Paths } from '../../../utils/types/types';
 import './NavBar.css';
 
-export class NavBar extends Component {
+class NavBar extends Component {
   render = () => (
     <nav className="header_nav">
       <NavLink
@@ -27,3 +27,5 @@ export class NavBar extends Component {
     </nav>
   );
 }
+
+export default NavBar;

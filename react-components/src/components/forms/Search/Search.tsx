@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { EmptyProps } from '../../../utils/types/types';
 import './Search.css';
 
-export class Search extends Component {
+class Search extends Component {
   readonly state: { searchWord: string };
   constructor(props: EmptyProps) {
     super(props);
@@ -33,3 +33,5 @@ export class Search extends Component {
     </div>
   );
 }
+
+export default Search;

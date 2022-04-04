@@ -7,7 +7,7 @@ interface IProps {
   setFormValues: Dispatch<SetStateAction<IGeneratorState>>;
 }
 
-export class Form extends Component<IProps> {
+class Form extends Component<IProps> {
   readonly state: IFormState;
   constructor(props: IProps) {
     super(props);
@@ -90,3 +90,5 @@ export class Form extends Component<IProps> {
     </form>
   );
 }
+
+export default Form;

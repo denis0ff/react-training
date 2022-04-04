@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { ICardGen } from '../../utils/types/types';
 import './CardGen.css';
 
-export class CardGen extends Component<ICardGen> {
+class CardGen extends Component<ICardGen> {
   render = () => (
     <li className="card-gen">
       <img className="card-gen_image" src={this.props.image} />
@@ -13,3 +13,5 @@ export class CardGen extends Component<ICardGen> {
     </li>
   );
 }
+
+export default CardGen;
