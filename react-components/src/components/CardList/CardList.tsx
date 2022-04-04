@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { ICard } from '../../utils/types';
+import { ICard } from '../../utils/types/types';
 import { Card } from './components/Card/Card';
 import './CardList.css';
 

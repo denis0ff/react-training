@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { EmptyProps } from '../../../utils/types';
+import { EmptyProps } from '../../../utils/types/types';
 import './Search.css';
 
 export class Search extends Component {

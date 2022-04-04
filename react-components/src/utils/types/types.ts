@@ -21,7 +21,7 @@ export interface ICard {
 export type EmptyProps = Record<string, never>;
 
 export interface ICardGen {
-  firstName: string;
+  fullName: string;
   date: string;
   country: string;
   gender: string;
@@ -30,4 +30,26 @@ export interface ICardGen {
 
 export interface IGeneratorState {
   cards: ICardGen[];
+}
+
+export interface IFormErrors {
+  agree?: string;
+  country?: string;
+  date?: string;
+  fullName?: string;
+  gender?: string;
+  image?: string;
+}
+
+export interface IFormState {
+  errors: IFormErrors;
+}
+
+export interface IValidationValues {
+  fullName: string;
+  date: string;
+  country: string;
+  gender: string;
+  image: File | null;
+  agree: boolean;
 }

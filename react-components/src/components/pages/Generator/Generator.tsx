@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { EmptyProps, IGeneratorState } from '../../../utils/types';
+import { EmptyProps, IGeneratorState } from '../../../utils/types/types';
 import { CardGen } from '../../CardGen/CardGen';
 import { Form } from '../../forms/Form/Form';
 
@@ -18,7 +18,7 @@ export class Generator extends Component {
         {this.state.cards.map((item, idx) => (
           <CardGen
             key={idx}
-            firstName={item.firstName}
+            fullName={item.fullName}
             date={item.date}
             country={item.country}
             gender={item.gender}

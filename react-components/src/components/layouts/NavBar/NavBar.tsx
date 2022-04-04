@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Paths } from '../../../utils/types';
+import { Paths } from '../../../utils/types/types';
 import './NavBar.css';
 
 export class NavBar extends Component {

@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { NotFound } from '../pages/NotFound/NotFound';
-import { App } from '../App/App';
+import { NotFound } from '../NotFound/NotFound';
+import { App } from '../../../App/App';
 
 describe('Routing', () => {
   it('full app rendering/navigating', () => {

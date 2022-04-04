@@ -1,72 +1,88 @@
-import { Component, createRef, Dispatch, FormEvent, SetStateAction } from 'react';
-import { ICardGen, IGeneratorState } from '../../../utils/types';
+import { Component, Dispatch, FormEvent, SetStateAction } from 'react';
+import { validateForm } from '../../../utils/helpers/validation';
+import { IFormState, IGeneratorState, IValidationValues } from '../../../utils/types/types';
+import './Form.css';
 
 interface IProps {
   setFormValues: Dispatch<SetStateAction<IGeneratorState>>;
 }
 
 export class Form extends Component<IProps> {
-  private firstName = createRef<HTMLInputElement>();
-  private date = createRef<HTMLInputElement>();
-  private country = createRef<HTMLSelectElement>();
-  private agree = createRef<HTMLInputElement>();
-  private gender = createRef<HTMLInputElement>();
-  private file = createRef<HTMLInputElement>();
+  readonly state: IFormState;
+  constructor(props: IProps) {
+    super(props);
+    this.state = { errors: {} };
+  }
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newCard: ICardGen = {
-      firstName: this.firstName.current?.value || '',
-      date: this.date.current?.value || '',
-      country: this.country.current?.value || '',
-      gender: this.gender.current?.value || '',
-      image: '',
+    const { elements } = e.currentTarget;
+    const values = {
+      fullName: (elements.namedItem('fullName') as HTMLInputElement).value,
+      date: (elements.namedItem('date') as HTMLInputElement).value,
+      country: (elements.namedItem('country') as HTMLInputElement).value,
+      gender: (elements.namedItem('gender') as HTMLInputElement).value,
+      image: (elements.namedItem('file') as HTMLInputElement).files![0] || null,
+      agree: (elements.namedItem('agree') as HTMLInputElement).checked,
     };
+    const errors = validateForm(values);
 
-    console.log(this.file.current?.files);
+    if (Object.keys(errors).length === 0) {
+      this.addCard(values);
+      e.currentTarget.reset();
+    } else this.setState({ errors });
+    console.log(errors);
+  };
 
-    const reader = new FileReader();
-    reader.readAsDataURL(this.file.current?.files![0] as Blob);
-    reader.onloadend = () => {
-      console.log(reader.result);
-      newCard.image = reader.result as string;
-      console.log(newCard.image);
-      this.props.setFormValues((prev) => {
-        return { ...prev, cards: [...prev.cards, newCard] };
-      });
-    };
+  addCard = ({ country, date, fullName, image, gender }: IValidationValues) => {
+    this.props.setFormValues((prev) => ({
+      ...prev,
+      cards: [
+        ...prev.cards,
+        {
+          country,
+          date,
+          fullName,
+          gender,
+          image: URL.createObjectURL(image as Blob),
+        },
+      ],
+    }));
   };
 
   render = () => (
     <form className="form" onSubmit={this.handleSubmit}>
-      <label className="form_field" htmlFor="firstName">
-        Name:
-        <input name="firstName" type="text" ref={this.firstName} />
+      <label className="form_field" htmlFor="fullName">
+        Name
+        <input className="form_text" name="fullName" type="text" />
       </label>
-      <label className="form_field" htmlFor="date">
-        Delivery date:
-        <input name="date" type="date" ref={this.date} />
-      </label>
-      <label className="form_field" htmlFor="country">
-        Country:
-        <select name="country" ref={this.country}>
-          <option>Belarus</option>
-          <option>Russia</option>
-          <option>Ukraine</option>
-        </select>
-      </label>
+      <div className="form_container">
+        <label className="form_field" htmlFor="date">
+          Delivery date
+          <input className="form_date" name="date" type="date" />
+        </label>
+        <label className="form_field" htmlFor="country">
+          Country
+          <select className="form_country" name="country" defaultValue={''}>
+            <option disabled></option>
+            <option>Belarus</option>
+            <option>Russia</option>
+            <option>Ukraine</option>
+          </select>
+        </label>
+      </div>
       <label className="form_field" htmlFor="agree">
         I agree with the processing of my data
-        <input name="agree" type="checkbox" ref={this.agree} />
+        <input name="agree" type="checkbox" />
       </label>
       <label className="form_field" htmlFor="gender">
         Gender:
-        <input name="gender" type="radio" ref={this.gender} value="Male" />
-        <input name="gender" type="radio" ref={this.gender} value="Female" />
+        <input name="gender" type="radio" value="Male" />
+        <input name="gender" type="radio" value="Female" />
       </label>
       <label className="form_field" htmlFor="file">
         Profile image:
-        <input name="file" type="file" accept="image/*" ref={this.file} />
+        <input name="file" type="file" accept="image/*" />
       </label>
       <label className="form_button" htmlFor="submit">
         <input name="submit" type="submit" />

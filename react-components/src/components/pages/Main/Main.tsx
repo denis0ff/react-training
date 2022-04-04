@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { CardList } from '../../CardList/CardList';
 import { Search } from '../../forms/Search/Search';
-import { data } from '../../../utils/data';
+import { data } from '../../../utils/data/data';
 
 export class Main extends Component {
   render = () => (
