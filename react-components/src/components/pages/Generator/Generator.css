@@ -1,0 +1,11 @@
+.card-gen_title {
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.card-gen_list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}

@@ -1,0 +1,16 @@
+.card-gen_item {
+  width: 400px;
+  padding: 0.5em;
+  box-shadow: inset 0px 0px 6px 4px #00000020;
+  background-color: #00000010;
+  list-style: none;
+}
+
+.card-gen_image {
+  max-width: 400px;
+}
+
+.card-gen_field > span {
+  font-size: 1.1em;
+  font-weight: 600;
+}

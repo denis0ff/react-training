@@ -7,13 +7,13 @@ export const validateForm = (values: IValidationValues) => {
 
   if (!validateDate(values.date)) errors.date = 'Incorrect date';
 
-  if (!validateGender(values.gender)) errors.gender = 'Gender should be chosen';
+  if (!validateGender(values.gender)) errors.gender = 'Please indicate your gender';
 
   if (!validateCountry(values.country)) errors.country = 'Country should be chosen';
 
   if (!validateFile(values.image)) errors.image = 'Download file with 2 MB size limit';
 
-  if (!validateAgree(values.agree)) errors.agree = 'You should be agree with conditions';
+  if (!validateAgree(values.agree)) errors.agree = 'You should agree with the terms';
 
   return errors;
 };

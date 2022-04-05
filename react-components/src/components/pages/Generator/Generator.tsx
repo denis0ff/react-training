@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { EmptyProps, IGeneratorState } from '../../../utils/types/types';
 import CardGen from '../../CardGen/';
 import Form from '../../forms/Form';
+import './Generator.css';
 
 class Generator extends Component {
   readonly state: IGeneratorState;
@@ -12,7 +13,7 @@ class Generator extends Component {
 
   render = () => (
     <section>
-      <h2>Card generator</h2>
+      <h2 className="card-gen_title">Card generator</h2>
       <Form setFormValues={this.setState.bind(this)} />
       <ul className="card-gen_list">
         {this.state.cards.map((item, idx) => (

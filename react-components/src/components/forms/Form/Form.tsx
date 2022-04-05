@@ -1,6 +1,7 @@
 import { Component, Dispatch, FormEvent, SetStateAction } from 'react';
 import { validateForm } from '../../../utils/helpers/validation';
 import { IFormState, IGeneratorState, IValidationValues } from '../../../utils/types/types';
+import { Agree, Country, DeliveryDate, FullName, Gender, ImageFile, Submit } from './components';
 import './Form.css';
 
 interface IProps {
@@ -11,7 +12,7 @@ class Form extends Component<IProps> {
   readonly state: IFormState;
   constructor(props: IProps) {
     super(props);
-    this.state = { errors: {} };
+    this.state = { errors: {}, cardIsSaved: false, submitIsDisabled: true };
   }
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -29,9 +30,9 @@ class Form extends Component<IProps> {
 
     if (Object.keys(errors).length === 0) {
       this.addCard(values);
+      this.setState({ errors: {}, cardIsSaved: true, submitIsDisabled: true });
       e.currentTarget.reset();
-    } else this.setState({ errors });
-    console.log(errors);
+    } else this.setState({ errors, cardIsSaved: false, submitIsDisabled: true });
   };
 
   addCard = ({ country, date, fullName, image, gender }: IValidationValues) => {
@@ -52,41 +53,17 @@ class Form extends Component<IProps> {
 
   render = () => (
     <form className="form" onSubmit={this.handleSubmit}>
-      <label className="form_field" htmlFor="fullName">
-        Name
-        <input className="form_text" name="fullName" type="text" />
-      </label>
+      <FullName message={this.state.errors.fullName} setErrors={this.setState.bind(this)} />
       <div className="form_container">
-        <label className="form_field" htmlFor="date">
-          Delivery date
-          <input className="form_date" name="date" type="date" />
-        </label>
-        <label className="form_field" htmlFor="country">
-          Country
-          <select className="form_country" name="country" defaultValue={''}>
-            <option disabled></option>
-            <option>Belarus</option>
-            <option>Russia</option>
-            <option>Ukraine</option>
-          </select>
-        </label>
+        <DeliveryDate message={this.state.errors.date} setErrors={this.setState.bind(this)} />
+        <Country message={this.state.errors.country} setErrors={this.setState.bind(this)} />
       </div>
-      <label className="form_field" htmlFor="agree">
-        I agree with the processing of my data
-        <input name="agree" type="checkbox" />
-      </label>
-      <label className="form_field" htmlFor="gender">
-        Gender:
-        <input name="gender" type="radio" value="Male" />
-        <input name="gender" type="radio" value="Female" />
-      </label>
-      <label className="form_field" htmlFor="file">
-        Profile image:
-        <input name="file" type="file" accept="image/*" />
-      </label>
-      <label className="form_button" htmlFor="submit">
-        <input name="submit" type="submit" />
-      </label>
+      <Agree message={this.state.errors.agree} setErrors={this.setState.bind(this)} />
+      <div className="form_container">
+        <Gender message={this.state.errors.gender} setErrors={this.setState.bind(this)} />
+        <ImageFile message={this.state.errors.image} setErrors={this.setState.bind(this)} />
+      </div>
+      <Submit isSaved={this.state.cardIsSaved} isDisabled={this.state.submitIsDisabled} />
     </form>
   );
 }

@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+
 export enum Paths {
   MAIN = '/',
   ABOUT_US = 'about-us',
@@ -43,6 +45,8 @@ export interface IFormErrors {
 
 export interface IFormState {
   errors: IFormErrors;
+  cardIsSaved: boolean;
+  submitIsDisabled: boolean;
 }
 
 export interface IValidationValues {
@@ -52,4 +56,9 @@ export interface IValidationValues {
   gender: string;
   image: File | null;
   agree: boolean;
+}
+
+export interface IFormInputProps {
+  message?: string;
+  setErrors: Dispatch<SetStateAction<IFormState>>;
 }
