@@ -12,7 +12,7 @@ class ImageFile extends Component<IFormInputProps> {
   render = () => (
     <div>
       <label className="form_field image-label">
-        Download image
+        Upload image
         <input
           className="form_image"
           name="file"
