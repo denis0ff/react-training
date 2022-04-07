@@ -62,3 +62,7 @@ export interface IFormInputProps {
   message?: string;
   setErrors: Dispatch<SetStateAction<IFormState>>;
 }
+
+export interface IMainState {
+  searchWord: string;
+}

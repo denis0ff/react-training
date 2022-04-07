@@ -1,35 +1,38 @@
 import { Component } from 'react';
-import { ICard } from '../../utils/types/types';
 import Card from './components/Card';
 import './CardList.css';
+import { IFilteredCharacter } from '../../utils/rickAndMorty/types';
+import { getCharacter } from '../../utils/rickAndMorty/utils';
 
 interface IProps {
-  data: ICard[];
+  searchWord: string;
 }
 
 class CardList extends Component<IProps> {
-  state: { cards: ICard[] };
+  readonly state: Partial<IFilteredCharacter>;
   constructor(props: IProps) {
     super(props);
-    this.state = { cards: this.props.data };
+    this.state = {};
   }
 
-  render = () => (
-    <ul className="card_list">
-      {this.state.cards.map(({ id, title, description, price, category, rating, image }) => (
-        <Card
-          key={id}
-          id={id}
-          title={title}
-          description={description}
-          price={price}
-          category={category}
-          rating={rating}
-          image={image}
-        />
-      ))}
-    </ul>
-  );
+  componentDidMount = async () => {
+    const response = await getCharacter(this.props.searchWord);
+    console.log(response);
+    this.setState({ ...response });
+  };
+
+  render = () => {
+    // console.log(this.state.results);
+    return (
+      <ul className="card_list">
+        {this.state.results ? (
+          this.state.results?.map((item) => <Card key={item.id} data={item} />)
+        ) : (
+          <p>Nothing found</p>
+        )}
+      </ul>
+    );
+  };
 }
 
 export default CardList;

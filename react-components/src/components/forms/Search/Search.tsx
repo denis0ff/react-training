@@ -1,10 +1,14 @@
-import { Component } from 'react';
-import { EmptyProps } from '../../../utils/types/types';
+import { Component, Dispatch, SetStateAction } from 'react';
+import { IMainState } from '../../../utils/types/types';
 import './Search.css';
 
-class Search extends Component {
+interface IProps {
+  setSearchWord: Dispatch<SetStateAction<IMainState>>;
+}
+
+class Search extends Component<IProps> {
   readonly state: { searchWord: string };
-  constructor(props: EmptyProps) {
+  constructor(props: IProps) {
     super(props);
     this.state = { searchWord: localStorage.getItem('searchWord') || '' };
   }
