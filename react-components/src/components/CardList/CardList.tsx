@@ -17,22 +17,25 @@ class CardList extends Component<IProps> {
 
   componentDidMount = async () => {
     const response = await getCharacter(this.props.searchWord);
-    console.log(response);
     this.setState({ ...response });
   };
 
-  render = () => {
-    // console.log(this.state.results);
-    return (
-      <ul className="card_list">
-        {this.state.results ? (
-          this.state.results?.map((item) => <Card key={item.id} data={item} />)
-        ) : (
-          <p>Nothing found</p>
-        )}
-      </ul>
-    );
+  componentDidUpdate = async (prev: IProps) => {
+    if (this.props.searchWord !== prev.searchWord) {
+      const response = await getCharacter(this.props.searchWord);
+      this.setState({ ...response });
+    }
   };
+
+  render = () => (
+    <ul className="card_list">
+      {this.state.results ? (
+        this.state.results?.map((item) => <Card key={item.id} data={item} />)
+      ) : (
+        <p>Nothing found</p>
+      )}
+    </ul>
+  );
 }
 
 export default CardList;

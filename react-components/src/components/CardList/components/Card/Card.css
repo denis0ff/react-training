@@ -32,7 +32,6 @@
 .card_wrapper {
   width: 90%;
   justify-content: space-around;
-  border-bottom: 2px dashed rgba(0, 0, 0, 0.6);
   font-size: 1.1em;
   font-weight: bold;
 }

@@ -8,7 +8,7 @@ class Main extends Component {
 
   constructor(props: EmptyProps) {
     super(props);
-    this.state = { searchWord: '' };
+    this.state = { searchWord: localStorage.getItem('searchWord') || '' };
   }
 
   render = () => (

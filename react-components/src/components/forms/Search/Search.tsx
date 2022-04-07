@@ -1,4 +1,4 @@
-import { Component, Dispatch, SetStateAction } from 'react';
+import { Component, Dispatch, KeyboardEvent, SetStateAction } from 'react';
 import { IMainState } from '../../../utils/types/types';
 import './Search.css';
 
@@ -21,6 +21,12 @@ class Search extends Component<IProps> {
     this.setState((prev) => ({ ...prev, searchWord: value }));
   };
 
+  handleKeyUp = ({ key }: KeyboardEvent) => {
+    if (key === 'Enter') {
+      this.props.setSearchWord({ searchWord: this.state.searchWord });
+    }
+  };
+
   render = () => (
     <div className="search_wrapper">
       <label htmlFor="search" className="search_label">
@@ -33,6 +39,7 @@ class Search extends Component<IProps> {
         placeholder="Search..."
         value={this.state.searchWord || ''}
         onChange={this.handleChangeInput}
+        onKeyUp={this.handleKeyUp}
       />
     </div>
   );
