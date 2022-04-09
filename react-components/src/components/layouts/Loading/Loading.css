@@ -1,0 +1,77 @@
+:root {
+  --main-dot: #b13849;
+  --transparent-dot: #b1384900;
+}
+
+.snippet {
+  position: relative;
+  padding: 1.5rem 5%;
+  width: 100%;
+}
+
+.stage {
+  display: flex;
+  justify-content: center;
+}
+
+.dot-spin {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  animation: dotSpin 1.5s infinite linear;
+}
+
+@keyframes dotSpin {
+  0%,
+  100% {
+    box-shadow: 0 -18px 0 0 var(--main-dot), 12px -12px 0 0 var(--main-dot), 18px 0 0 0 var(--main-dot),
+      12px 12px 0 -5px var(--transparent-dot), 0 18px 0 -5px var(--transparent-dot),
+      -12px 12px 0 -5px var(--transparent-dot), -18px 0 0 -5px var(--transparent-dot),
+      -12px -12px 0 -5px var(--transparent-dot);
+  }
+  12.5% {
+    box-shadow: 0 -18px 0 -5px var(--transparent-dot), 12px -12px 0 0 var(--main-dot),
+      18px 0 0 0 var(--main-dot), 12px 12px 0 0 var(--main-dot), 0 18px 0 -5px var(--transparent-dot),
+      -12px 12px 0 -5px var(--transparent-dot), -18px 0 0 -5px var(--transparent-dot),
+      -12px -12px 0 -5px var(--transparent-dot);
+  }
+  25% {
+    box-shadow: 0 -18px 0 -5px var(--transparent-dot),
+      12px -12px 0 -5px var(--transparent-dot), 18px 0 0 0 var(--main-dot),
+      12px 12px 0 0 var(--main-dot), 0 18px 0 0 var(--main-dot),
+      -12px 12px 0 -5px var(--transparent-dot), -18px 0 0 -5px var(--transparent-dot),
+      -12px -12px 0 -5px var(--transparent-dot);
+  }
+  37.5% {
+    box-shadow: 0 -18px 0 -5px var(--transparent-dot),
+      12px -12px 0 -5px var(--transparent-dot), 18px 0 0 -5px var(--transparent-dot),
+      12px 12px 0 0 var(--main-dot), 0 18px 0 0 var(--main-dot), -12px 12px 0 0 var(--main-dot),
+      -18px 0 0 -5px var(--transparent-dot), -12px -12px 0 -5px var(--transparent-dot);
+  }
+  50% {
+    box-shadow: 0 -18px 0 -5px var(--transparent-dot),
+      12px -12px 0 -5px var(--transparent-dot), 18px 0 0 -5px var(--transparent-dot),
+      12px 12px 0 -5px var(--transparent-dot), 0 18px 0 0 var(--main-dot),
+      -12px 12px 0 0 var(--main-dot), -18px 0 0 0 var(--main-dot),
+      -12px -12px 0 -5px var(--transparent-dot);
+  }
+  62.5% {
+    box-shadow: 0 -18px 0 -5px var(--transparent-dot),
+      12px -12px 0 -5px var(--transparent-dot), 18px 0 0 -5px var(--transparent-dot),
+      12px 12px 0 -5px var(--transparent-dot), 0 18px 0 -5px var(--transparent-dot),
+      -12px 12px 0 0 var(--main-dot), -18px 0 0 0 var(--main-dot), -12px -12px 0 0 var(--main-dot);
+  }
+  75% {
+    box-shadow: 0 -18px 0 0 var(--main-dot), 12px -12px 0 -5px var(--transparent-dot),
+      18px 0 0 -5px var(--transparent-dot), 12px 12px 0 -5px var(--transparent-dot),
+      0 18px 0 -5px var(--transparent-dot), -12px 12px 0 -5px var(--transparent-dot),
+      -18px 0 0 0 var(--main-dot), -12px -12px 0 0 var(--main-dot);
+  }
+  87.5% {
+    box-shadow: 0 -18px 0 0 var(--main-dot), 12px -12px 0 0 var(--main-dot),
+      18px 0 0 -5px var(--transparent-dot), 12px 12px 0 -5px var(--transparent-dot),
+      0 18px 0 -5px var(--transparent-dot), -12px 12px 0 -5px var(--transparent-dot),
+      -18px 0 0 -5px var(--transparent-dot), -12px -12px 0 0 var(--main-dot);
+  }
+}

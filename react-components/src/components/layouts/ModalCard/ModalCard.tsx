@@ -18,7 +18,7 @@ class ModalCard extends Component<IProps> {
       className={`modal-card_overlay ${this.props.show ? '' : 'hide'}`}
       onClick={this.handleOverlayClose}
     >
-      <section className="modal-card">
+      <section className={`modal-card ${this.props.show ? '' : 'hide'}`}>
         <article className="modal-card_container">
           <img src={this.props.data?.image} />
         </article>

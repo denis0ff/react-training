@@ -1,5 +1,5 @@
 .card {
-  width: 300px;
+  width: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,10 +23,6 @@
   box-sizing: border-box;
   max-width: 100%;
   height: 200px;
-}
-
-.card_title {
-  min-height: 5.5em;
 }
 
 .card_wrapper {

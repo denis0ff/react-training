@@ -7,8 +7,8 @@ import Header from '../components/layouts/Header';
 class App extends Component {
   render = () => (
     <BrowserRouter>
+      <Header />
       <main className="main-container">
-        <Header />
         <AppRouter />
       </main>
     </BrowserRouter>
