@@ -56,7 +56,7 @@ class CardList extends Component<IProps> {
             this.state.results?.map((item) => (
               <Card key={item.id} data={item} handleModal={() => this.showModal(item)} />
             ))
-          : !this.state.isPending && <h3>Nothing found</h3>}
+          : !this.state.isPending && <h3 data-testid="not-found">Nothing was found</h3>}
         <ModalCard
           show={this.state.modal.show}
           data={this.state.modal.props}

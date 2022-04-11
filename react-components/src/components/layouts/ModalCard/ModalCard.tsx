@@ -17,10 +17,14 @@ class ModalCard extends Component<IProps> {
     <div
       className={`modal-card_overlay ${this.props.show ? '' : 'hide'}`}
       onClick={this.handleOverlayClose}
+      data-testid="modal-window"
     >
-      <section className={`modal-card ${this.props.show ? '' : 'hide'}`}>
+      <section
+        className={`modal-card ${this.props.show ? '' : 'hide'}`}
+        data-testid="modal-container"
+      >
         <article className="modal-card_container">
-          <img src={this.props.data?.image} />
+          <img src={this.props.data?.image} data-testid="modal-image" />
         </article>
         <article className="modal-card_container">
           <h2 className="modal-card_title">{this.props.data?.name}</h2>
@@ -45,12 +49,17 @@ class ModalCard extends Component<IProps> {
             </li>
             {this.props.data?.type ? (
               <li className="modal-card_item">
-                Type: <span>{this.props.data?.status}</span>
+                Type: <span>{this.props.data?.type}</span>
               </li>
             ) : null}
           </ul>
         </article>
-        <button className="modal-card_close" type="button" onClick={this.props.handleClose} />
+        <button
+          className="modal-card_close"
+          type="button"
+          onClick={this.props.handleClose}
+          data-testid="modal-close"
+        />
       </section>
     </div>
   );

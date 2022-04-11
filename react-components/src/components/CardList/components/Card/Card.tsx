@@ -9,7 +9,7 @@ interface IProps {
 
 class Card extends Component<IProps> {
   render = () => (
-    <li className="card" onClick={this.props.handleModal}>
+    <li className="card" onClick={this.props.handleModal} data-testid="card">
       <img className="card_image" src={this.props.data.image}></img>
       <h3 className="card_title">{this.props.data.name}</h3>
     </li>
