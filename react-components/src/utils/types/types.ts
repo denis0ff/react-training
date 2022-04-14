@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
-
 export enum Paths {
   MAIN = '/',
   ABOUT_US = 'about-us',

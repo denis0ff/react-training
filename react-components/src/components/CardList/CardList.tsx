@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 import Card from './components/Card';
 import './CardList.css';
 import { ICharacter, IFilteredCharacter } from '../../utils/rickAndMorty/types';
@@ -6,65 +6,43 @@ import { getCharacterRequest } from '../../utils/rickAndMorty/utils';
 import ModalCard from '../layouts/ModalCard';
 import Loading from '../layouts/Loading';
 
-interface IProps {
+interface Props {
   searchWord: string;
 }
 
-interface IState extends Partial<IFilteredCharacter> {
-  modal: { show: boolean; props?: ICharacter };
-  isPending: boolean;
+interface Data extends Partial<IFilteredCharacter> {
+  show: boolean;
+  props?: ICharacter;
 }
 
-class CardList extends Component<IProps> {
-  readonly state: IState;
-  constructor(props: IProps) {
-    super(props);
-    this.state = { modal: { show: false }, isPending: true };
-    this.showModal = this.showModal.bind(this);
-    this.hideModal = this.hideModal.bind(this);
-  }
+const CardList = ({ searchWord }: Props) => {
+  const [isPending, setIsPending] = useState(true);
+  const [data, setData] = useState<Data>({ show: false });
 
-  componentDidMount = () => {
-    this.setCards();
-  };
+  const hideModal = () => setData((prev: Data) => ({ ...prev, show: false }));
+  const showModal = (props: ICharacter) => setData((prev) => ({ ...prev, show: true, props }));
 
-  componentDidUpdate = (prev: IProps) => {
-    if (this.props.searchWord !== prev.searchWord) this.setCards();
-  };
+  useEffect(() => {
+    setIsPending(true);
+    getCharacterRequest(searchWord)
+      .then(({ data }) => setData((prev) => ({ ...prev, ...data })))
+      .catch(() => setData((prev) => ({ ...prev, results: undefined })))
+      .finally(() => setIsPending(false));
+  }, [searchWord]);
 
-  setCards = async () => {
-    this.setState((prev) => ({ ...prev, isPending: true }));
-    await getCharacterRequest(this.props.searchWord)
-      .then(({ data }) => this.setState((prev) => ({ ...prev, ...data, isPending: false })))
-      .catch(() => this.setState((prev) => ({ ...prev, isPending: false, results: null })));
-  };
-
-  showModal = (props: ICharacter) => {
-    this.setState((prev) => ({ ...prev, modal: { show: true, props } }));
-  };
-
-  hideModal = () => {
-    this.setState((prev: IState) => ({ ...prev, modal: { ...prev.modal, show: false } }));
-  };
-
-  render = () => (
+  return (
     <>
+      {isPending && <Loading />}
+      {!data.results && !isPending && <h3 data-testid="not-found">Nothing was found</h3>}
+      <ModalCard show={data.show} data={data.props} handleClose={hideModal} />
       <ul className="card_list">
-        {this.state.isPending && <Loading />}
-        {this.state.results
-          ? !this.state.isPending &&
-            this.state.results?.map((item) => (
-              <Card key={item.id} data={item} handleModal={() => this.showModal(item)} />
-            ))
-          : !this.state.isPending && <h3 data-testid="not-found">Nothing was found</h3>}
-        <ModalCard
-          show={this.state.modal.show}
-          data={this.state.modal.props}
-          handleClose={this.hideModal}
-        />
+        {!isPending &&
+          data.results?.map((item) => (
+            <Card key={item.id} data={item} handleModal={() => showModal(item)} />
+          ))}
       </ul>
     </>
   );
-}
+};
 
 export default CardList;
