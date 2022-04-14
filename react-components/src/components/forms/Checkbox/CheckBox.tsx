@@ -1,14 +1,8 @@
 import { Component } from 'react';
-import { IFormInputProps } from '../../../../utils/types/types';
+import { IFormInputProps } from '../../../utils/types/types';
 
-class Agree extends Component<IFormInputProps> {
-  handleInput = () => {
-    this.props.setErrors((prev) => {
-      const { errors } = prev;
-      delete errors.agree;
-      return { ...prev, errors, submitIsDisabled: Object.keys(errors).length !== 0 };
-    });
-  };
+class Checkbox extends Component<IFormInputProps> {
+  handleInput = () => this.props.setError('agree');
 
   render = () => (
     <div>
@@ -22,4 +16,4 @@ class Agree extends Component<IFormInputProps> {
   );
 }
 
-export default Agree;
+export default Checkbox;

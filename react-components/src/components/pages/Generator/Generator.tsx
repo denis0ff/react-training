@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { EmptyProps, IGeneratorState } from '../../../utils/types/types';
 import CardGen from '../../CardGen/';
-import Form from '../../forms/Form';
+import Form from '../../Form';
 import './Generator.css';
 
 class Generator extends Component {

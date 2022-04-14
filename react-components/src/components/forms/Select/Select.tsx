@@ -1,14 +1,9 @@
 import { Component } from 'react';
-import { IFormInputProps } from '../../../../utils/types/types';
+import { IFormInputProps } from '../../../utils/types/types';
 
-class Country extends Component<IFormInputProps> {
-  handleInput = () => {
-    this.props.setErrors((prev) => {
-      const { errors } = prev;
-      delete errors.country;
-      return { ...prev, errors, submitIsDisabled: Object.keys(errors).length !== 0 };
-    });
-  };
+class Select extends Component<IFormInputProps> {
+  handleInput = () => this.props.setError('country');
+
   render = () => (
     <label className="form_field">
       Country
@@ -23,4 +18,4 @@ class Country extends Component<IFormInputProps> {
   );
 }
 
-export default Country;
+export default Select;
