@@ -1,7 +1,13 @@
 import { Component, Dispatch, FormEvent, SetStateAction } from 'react';
-import { validateForm } from '../../../utils/helpers/validation';
-import { IFormState, IGeneratorState, IValidationValues } from '../../../utils/types/types';
-import { Agree, Country, DeliveryDate, FullName, Gender, ImageFile, Submit } from './components';
+import { validateForm } from '../../utils/helpers/validation';
+import { IFormState, IGeneratorState, IValidationValues } from '../../utils/types/types';
+import Checkbox from '../forms/Checkbox';
+import DatePicker from '../forms/DatePicker';
+import ImageUpload from '../forms/ImageUpload';
+import Select from '../forms/Select';
+import Submit from '../forms/Submit';
+import Switcher from '../forms/Switcher';
+import Textfield from '../forms/Textfield';
 import './Form.css';
 
 interface IProps {
@@ -51,17 +57,24 @@ class Form extends Component<IProps> {
     }));
   };
 
+  setError = (field: string) =>
+    this.setState((prev: IFormState) => {
+      const { errors } = prev;
+      delete errors[field];
+      return { ...prev, errors, submitIsDisabled: Object.keys(errors).length !== 0 };
+    });
+
   render = () => (
     <form className="form" onSubmit={this.handleSubmit}>
-      <FullName message={this.state.errors.fullName} setErrors={this.setState.bind(this)} />
+      <Textfield message={this.state.errors.fullName} setError={this.setError} />
       <div className="form_container">
-        <DeliveryDate message={this.state.errors.date} setErrors={this.setState.bind(this)} />
-        <Country message={this.state.errors.country} setErrors={this.setState.bind(this)} />
+        <DatePicker message={this.state.errors.date} setError={this.setError} />
+        <Select message={this.state.errors.country} setError={this.setError} />
       </div>
-      <Agree message={this.state.errors.agree} setErrors={this.setState.bind(this)} />
+      <Checkbox message={this.state.errors.agree} setError={this.setError} />
       <div className="form_container">
-        <Gender message={this.state.errors.gender} setErrors={this.setState.bind(this)} />
-        <ImageFile message={this.state.errors.image} setErrors={this.setState.bind(this)} />
+        <Switcher message={this.state.errors.gender} setError={this.setError} />
+        <ImageUpload message={this.state.errors.image} setError={this.setError} />
       </div>
       <Submit isSaved={this.state.cardIsSaved} isDisabled={this.state.submitIsDisabled} />
     </form>

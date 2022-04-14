@@ -35,12 +35,7 @@ export interface IGeneratorState {
 }
 
 export interface IFormErrors {
-  agree?: string;
-  country?: string;
-  date?: string;
-  fullName?: string;
-  gender?: string;
-  image?: string;
+  [x: string]: string | undefined;
 }
 
 export interface IFormState {
@@ -60,5 +55,5 @@ export interface IValidationValues {
 
 export interface IFormInputProps {
   message?: string;
-  setErrors: Dispatch<SetStateAction<IFormState>>;
+  setError: (x: string) => void;
 }

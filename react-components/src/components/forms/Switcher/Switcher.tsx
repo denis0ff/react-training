@@ -1,14 +1,9 @@
 import { Component } from 'react';
-import { IFormInputProps } from '../../../../utils/types/types';
+import { IFormInputProps } from '../../../utils/types/types';
 
-class Gender extends Component<IFormInputProps> {
-  handleInput = () => {
-    this.props.setErrors((prev) => {
-      const { errors } = prev;
-      delete errors.gender;
-      return { ...prev, errors, submitIsDisabled: Object.keys(errors).length !== 0 };
-    });
-  };
+class Switcher extends Component<IFormInputProps> {
+  handleInput = () => this.props.setError('gender');
+
   render = () => (
     <div className="form_radiogroup">
       <input
@@ -38,4 +33,4 @@ class Gender extends Component<IFormInputProps> {
   );
 }
 
-export default Gender;
+export default Switcher;

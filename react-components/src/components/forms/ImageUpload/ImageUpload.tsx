@@ -1,14 +1,9 @@
 import { Component } from 'react';
-import { IFormInputProps } from '../../../../utils/types/types';
+import { IFormInputProps } from '../../../utils/types/types';
 
-class ImageFile extends Component<IFormInputProps> {
-  handleInput = () => {
-    this.props.setErrors((prev) => {
-      const { errors } = prev;
-      delete errors.image;
-      return { ...prev, errors, submitIsDisabled: Object.keys(errors).length !== 0 };
-    });
-  };
+class ImageUpload extends Component<IFormInputProps> {
+  handleInput = () => this.props.setError('image');
+
   render = () => (
     <div>
       <label className="form_field image-label">
@@ -26,4 +21,4 @@ class ImageFile extends Component<IFormInputProps> {
   );
 }
 
-export default ImageFile;
+export default ImageUpload;
