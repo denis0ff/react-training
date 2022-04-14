@@ -1,22 +1,16 @@
-import { Component } from 'react';
-import { EmptyProps, IMainState } from '../../../utils/types/types';
+import { useState } from 'react';
 import CardList from '../../CardList/CardList';
 import Search from '../../forms/Search/Search';
 
-class Main extends Component {
-  readonly state: IMainState;
+const Main = () => {
+  const [searchWord, setSearchWord] = useState(localStorage.getItem('searchWord') || '');
 
-  constructor(props: EmptyProps) {
-    super(props);
-    this.state = { searchWord: localStorage.getItem('searchWord') || '' };
-  }
-
-  render = () => (
+  return (
     <>
-      <Search setSearchWord={this.setState.bind(this)} />
-      <CardList searchWord={this.state.searchWord} />
+      <Search searchWord={searchWord} setSearchWord={setSearchWord} />
+      <CardList searchWord={searchWord} />
     </>
   );
-}
+};
 
 export default Main;

@@ -1,33 +1,26 @@
-import { Component, Dispatch, KeyboardEvent, SetStateAction } from 'react';
-import { IMainState } from '../../../utils/types/types';
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 import './Search.css';
 
-interface IProps {
-  setSearchWord: Dispatch<SetStateAction<IMainState>>;
+interface Props {
+  searchWord: string;
+  setSearchWord: Dispatch<SetStateAction<string>>;
 }
 
-class Search extends Component<IProps> {
-  readonly state: { searchWord: string };
-  constructor(props: IProps) {
-    super(props);
-    this.state = { searchWord: localStorage.getItem('searchWord') || '' };
-  }
+const Search = ({ searchWord, setSearchWord }: Props) => {
+  const [currentWord, setCurrentWord] = useState(searchWord);
 
-  componentWillUnmount = () => {
-    localStorage.setItem('searchWord', this.state.searchWord);
-  };
+  useEffect(() => {
+    window.localStorage.setItem('searchWord', currentWord);
+  }, [currentWord]);
 
-  handleChangeInput = ({ target: { value } }: { target: { value: string } }) => {
-    this.setState((prev) => ({ ...prev, searchWord: value }));
-  };
+  const handleKeyUp = useCallback(
+    ({ key }) => {
+      if (key === 'Enter') setSearchWord(currentWord);
+    },
+    [setSearchWord, currentWord]
+  );
 
-  handleKeyUp = ({ key }: KeyboardEvent) => {
-    if (key === 'Enter') {
-      this.props.setSearchWord({ searchWord: this.state.searchWord });
-    }
-  };
-
-  render = () => (
+  return (
     <div className="search_wrapper">
       <label htmlFor="search" className="search_label">
         Search
@@ -37,12 +30,12 @@ class Search extends Component<IProps> {
         className="search_input"
         type="search"
         placeholder="Search..."
-        value={this.state.searchWord || ''}
-        onChange={this.handleChangeInput}
-        onKeyUp={this.handleKeyUp}
+        value={currentWord || ''}
+        onChange={({ target: { value } }) => setCurrentWord(value)}
+        onKeyUp={handleKeyUp}
       />
     </div>
   );
-}
+};
 
 export default Search;
