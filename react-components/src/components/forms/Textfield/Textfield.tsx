@@ -1,16 +1,16 @@
-import { Component } from 'react';
-import { IFormInputProps } from '../../../utils/types/types';
+import { FormInputProps } from '../../../utils/types/types';
 
-class Textfield extends Component<IFormInputProps> {
-  handleInput = () => this.props.setError('fullName');
-
-  render = () => (
-    <label className="form_field">
-      Your Name
-      <input className="form_name" name="fullName" type="text" onInput={this.handleInput} />
-      <span className="form_error">{this.props.message}</span>
-    </label>
-  );
-}
+const Textfield = ({ data, register, error, clearErrors }: FormInputProps) => (
+  <label className="form_field">
+    {data.label}
+    <input
+      className="form_name"
+      type="text"
+      {...register(data.name, { ...data.register })}
+      onInput={clearErrors}
+    />
+    <span className="form_error">{error}</span>
+  </label>
+);
 
 export default Textfield;

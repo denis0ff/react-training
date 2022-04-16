@@ -21,18 +21,7 @@ const cards = [
 
 describe('Generator page', () => {
   it('generator render', () => {
-    render(
-      <Generator>
-        <CardGen
-          key={0}
-          fullName={cards[0].fullName}
-          date={cards[0].date}
-          country={cards[0].country}
-          gender={cards[0].gender}
-          image={cards[0].image}
-        />
-      </Generator>
-    );
+    render(<Generator />);
     expect(screen.getByRole('heading')).toBeInTheDocument();
     expect(screen.getByRole('heading')).toHaveTextContent(/card generator/i);
     expect(screen.getByRole('textbox')).toBeInTheDocument();

@@ -1,3 +1,5 @@
+import { UseFormRegister } from 'react-hook-form';
+
 export enum Paths {
   MAIN = '/',
   ABOUT_US = 'about-us',
@@ -28,32 +30,35 @@ export interface ICardGen {
   image: string;
 }
 
-export interface IGeneratorState {
-  cards: ICardGen[];
+type ValidateFunction =
+  | ((x: string | null) => boolean)
+  | ((x: boolean) => boolean)
+  | ((x: FileList | null) => boolean);
+
+export interface FormField {
+  name: string;
+  label?: string;
+  options?: string[];
+  register: {
+    validate: Partial<ValidateFunction>;
+  };
 }
 
-export interface IFormErrors {
-  [x: string]: string | undefined;
-}
-
-export interface IFormState {
-  errors: IFormErrors;
-  cardIsSaved: boolean;
-  submitIsDisabled: boolean;
-}
-
-export interface IValidationValues {
-  fullName: string;
-  date: string;
-  country: string;
-  gender: string;
-  image: File | null;
+export interface FormValues {
+  [x: string]: string | boolean | FileList;
   agree: boolean;
+  country: string;
+  date: string;
+  gender: string;
+  name: string;
+  image: FileList;
 }
 
-export interface IFormInputProps {
-  message?: string;
-  setError: (x: string) => void;
+export interface FormInputProps {
+  data: FormField;
+  error?: string;
+  register: UseFormRegister<FormValues>;
+  clearErrors: () => void;
 }
 
 export interface IMainState {

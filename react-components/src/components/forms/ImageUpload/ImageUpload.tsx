@@ -1,24 +1,19 @@
-import { Component } from 'react';
-import { IFormInputProps } from '../../../utils/types/types';
+import { FormInputProps } from '../../../utils/types/types';
 
-class ImageUpload extends Component<IFormInputProps> {
-  handleInput = () => this.props.setError('image');
-
-  render = () => (
-    <div>
-      <label className="form_field image-label">
-        Upload image
-        <input
-          className="form_image"
-          name="file"
-          type="file"
-          accept="image/*"
-          onInput={this.handleInput}
-        />
-      </label>
-      <span className="form_error">{this.props.message}</span>
-    </div>
-  );
-}
+const ImageUpload = ({ data, register, error, clearErrors }: FormInputProps) => (
+  <div>
+    <label className="form_field image-label">
+      {data.label}
+      <input
+        className="form_image"
+        type="file"
+        accept="image/*"
+        {...register(data.name, { ...data.register })}
+        onInput={clearErrors}
+      />
+    </label>
+    <span className="form_error">{error}</span>
+  </div>
+);
 
 export default ImageUpload;

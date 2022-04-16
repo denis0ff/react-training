@@ -2,9 +2,11 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Form from './Form';
 
+const setter = jest.fn();
+
 describe('Form component works', () => {
   it('render form', () => {
-    render(<Form setFormValues={(): void => {}} />);
+    render(<Form setCards={setter} />);
     expect(screen.getByRole('textbox')).toBeInTheDocument();
     expect(screen.getByRole('textbox')).toHaveValue('');
 
@@ -29,44 +31,44 @@ describe('Form component works', () => {
   });
 
   it('submit button should be disabled', () => {
-    render(<Form setFormValues={(): void => {}} />);
+    render(<Form setCards={setter} />);
     expect(screen.getByRole('button')).toBeDisabled();
   });
 
   it('submit button not to be disabled after 1st input', () => {
-    render(<Form setFormValues={(): void => {}} />);
+    render(<Form setCards={setter} />);
     userEvent.type(screen.getByRole('textbox'), 'Correct Name');
     expect(screen.getByRole('button')).not.toBeDisabled();
   });
 
-  it('submit button should be disabled with unfulfilled form', () => {
-    render(<Form setFormValues={(): void => {}} />);
+  it('submit button should be disabled with unfulfilled form', async () => {
+    render(<Form setCards={setter} />);
     userEvent.type(screen.getByRole('textbox'), 'Correct Name');
     userEvent.click(screen.getByRole('button'));
-    expect(screen.getByRole('button')).toBeDisabled();
+    expect(await screen.findByRole('button')).toBeDisabled();
   });
 
-  it('should render errors of incorrect fields', () => {
-    render(<Form setFormValues={(): void => {}} />);
+  it('should render errors of incorrect fields', async () => {
+    render(<Form setCards={setter} />);
     userEvent.type(screen.getByRole('textbox'), 'Correct Name');
     userEvent.click(screen.getByLabelText('Male'));
     userEvent.click(screen.getByRole('button'));
     expect(screen.queryByText(/Incorrect name/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Please indicate your gender/i)).not.toBeInTheDocument();
-    expect(screen.getByText(/Incorrect date/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Incorrect date/i)).toBeInTheDocument();
     expect(screen.getByText(/Country should be chosen/i)).toBeInTheDocument();
     expect(screen.getByText(/You should agree with the terms/i)).toBeInTheDocument();
     expect(screen.getByText(/Download file with 2 MB size limit/i)).toBeInTheDocument();
   });
 
-  it('should render only incorrect fields errors after some input corrected', () => {
-    render(<Form setFormValues={(): void => {}} />);
+  it('should render only incorrect fields errors after some input corrected', async () => {
+    render(<Form setCards={setter} />);
     userEvent.type(screen.getByRole('textbox'), 'Correct Name');
     userEvent.click(screen.getByLabelText('Male'));
     userEvent.click(screen.getByRole('button'));
     expect(screen.queryByText(/Incorrect name/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Please indicate your gender/i)).not.toBeInTheDocument();
-    expect(screen.getByText(/Incorrect date/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Incorrect date/i)).toBeInTheDocument();
     expect(screen.getByText(/Country should be chosen/i)).toBeInTheDocument();
     expect(screen.getByText(/You should agree with the terms/i)).toBeInTheDocument();
     expect(screen.getByText(/Download file with 2 MB size limit/i)).toBeInTheDocument();
@@ -81,8 +83,8 @@ describe('Form component works', () => {
     expect(screen.getByText(/Download file with 2 MB size limit/i)).toBeInTheDocument();
   });
 
-  it('form submit correctly', () => {
-    render(<Form setFormValues={(): void => {}} />);
+  it('form submit correctly', async () => {
+    render(<Form setCards={setter} />);
     userEvent.type(screen.getByRole('textbox'), 'Correct Name');
     userEvent.type(screen.getByLabelText(/delivery date/i), '2022-12-17');
     userEvent.selectOptions(screen.getByRole('combobox'), screen.getByText('Belarus'));
@@ -100,7 +102,7 @@ describe('Form component works', () => {
     expect(screen.queryByText(/Please indicate your gender/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Download file with 2 MB size limit/i)).not.toBeInTheDocument();
 
-    expect(screen.getByRole('textbox')).toHaveValue('');
+    expect(await screen.findByRole('textbox')).toHaveValue('');
     expect(screen.getByLabelText(/delivery date/i)).toHaveValue('');
     expect(screen.getByRole('combobox')).toHaveValue('');
     expect(screen.getByRole('checkbox')).not.toBeChecked();
