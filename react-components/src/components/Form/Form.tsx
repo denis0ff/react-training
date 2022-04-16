@@ -28,7 +28,7 @@ const Form = ({ setCards }: Props) => {
       {
         country: data.country,
         date: data.date,
-        fullName: data.name,
+        fullName: data.fullName,
         gender: data.gender,
         image: URL.createObjectURL(data.image[0] as Blob),
       },

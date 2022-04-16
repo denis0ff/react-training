@@ -7,21 +7,6 @@ export enum Paths {
   NOT_FOUND = '*',
 }
 
-export interface ICard {
-  id: number;
-  title: string;
-  price: number;
-  category: string;
-  description: string;
-  rating: {
-    rate: number;
-    count: number;
-  };
-  image: string;
-}
-
-export type EmptyProps = Record<string, never>;
-
 export interface ICardGen {
   fullName: string;
   date: string;
@@ -50,7 +35,7 @@ export interface FormValues {
   country: string;
   date: string;
   gender: string;
-  name: string;
+  fullName: string;
   image: FileList;
 }
 
@@ -59,8 +44,4 @@ export interface FormInputProps {
   error?: string;
   register: UseFormRegister<FormValues>;
   clearErrors: () => void;
-}
-
-export interface IMainState {
-  searchWord: string;
 }
