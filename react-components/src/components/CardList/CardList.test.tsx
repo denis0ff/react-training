@@ -25,13 +25,16 @@ const incorrectResults = {
 };
 
 const mockCall = (data: typeof emptyResults.data | typeof incorrectResults.data) =>
-  axiosMock.get.mockResolvedValueOnce({
+  axiosMock.request.mockResolvedValueOnce({
     ...data,
   });
 
-afterEach(() => axiosMock.get.mockClear());
+afterEach(() => axiosMock.request.mockClear());
 
-const getUrl = (word: string) => `https://rickandmortyapi.com/api/character/?name=${word}`;
+const getResolve = (word: string) => ({
+  baseURL: `https://rickandmortyapi.com/api/character/?name=${word}`,
+  headers: { 'Content-type': 'application/json' },
+});
 
 describe('Card list', () => {
   it('show loader while fetching data', async () => {
@@ -52,8 +55,8 @@ describe('Card list', () => {
     expect(cards.map((card) => card.textContent)).toEqual(
       emptyResults.data.data.results.map(({ name }) => name)
     );
-    expect(axiosMock.get).toHaveBeenCalledWith(getUrl(emptyResults.searchWord));
-    expect(axiosMock.get).toHaveBeenCalledTimes(1);
+    expect(axiosMock.request).toHaveBeenCalledWith(getResolve(emptyResults.searchWord));
+    expect(axiosMock.request).toHaveBeenCalledTimes(1);
   });
 
   it('fetches and renders data with some search word', async () => {
@@ -68,8 +71,8 @@ describe('Card list', () => {
     expect(cards.map((card) => card.textContent)).toEqual(
       mortyResults.data.data.results.map(({ name }) => name)
     );
-    expect(axiosMock.get).toHaveBeenCalledWith(getUrl(mortyResults.searchWord));
-    expect(axiosMock.get).toHaveBeenCalledTimes(1);
+    expect(axiosMock.request).toHaveBeenCalledWith(getResolve(mortyResults.searchWord));
+    expect(axiosMock.request).toHaveBeenCalledTimes(1);
   });
 
   it('render error when data was not found', async () => {
@@ -79,8 +82,8 @@ describe('Card list', () => {
     await waitForElementToBeRemoved(screen.getByTestId(/loader/i));
 
     expect(screen.getByTestId(/not-found/i)).toBeInTheDocument();
-    expect(axiosMock.get).toHaveBeenCalledWith(getUrl(incorrectResults.searchWord));
-    expect(axiosMock.get).toHaveBeenCalledTimes(1);
+    expect(axiosMock.request).toHaveBeenCalledWith(getResolve(incorrectResults.searchWord));
+    expect(axiosMock.request).toHaveBeenCalledTimes(1);
   });
 });
 

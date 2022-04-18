@@ -24,12 +24,13 @@ class Form extends Component<IProps> {
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { elements } = e.currentTarget;
+    const fileList = (elements.namedItem('file') as HTMLInputElement).files;
     const values = {
       fullName: (elements.namedItem('fullName') as HTMLInputElement).value,
       date: (elements.namedItem('date') as HTMLInputElement).value,
       country: (elements.namedItem('country') as HTMLInputElement).value,
       gender: (elements.namedItem('gender') as HTMLInputElement).value,
-      image: (elements.namedItem('file') as HTMLInputElement).files![0] || null,
+      image: fileList && fileList[0],
       agree: (elements.namedItem('agree') as HTMLInputElement).checked,
     };
     const errors = validateForm(values);

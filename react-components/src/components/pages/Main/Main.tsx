@@ -11,9 +11,11 @@ class Main extends Component {
     this.state = { searchWord: localStorage.getItem('searchWord') || '' };
   }
 
+  setSearchWord = (searchWord: string) => this.setState({ searchWord });
+
   render = () => (
     <>
-      <Search setSearchWord={this.setState.bind(this)} />
+      <Search setSearchWord={this.setSearchWord} />
       <CardList searchWord={this.state.searchWord} />
     </>
   );

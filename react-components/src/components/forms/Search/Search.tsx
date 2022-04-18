@@ -1,9 +1,8 @@
-import { Component, Dispatch, KeyboardEvent, SetStateAction } from 'react';
-import { IMainState } from '../../../utils/types/types';
+import { Component, KeyboardEvent } from 'react';
 import './Search.css';
 
 interface IProps {
-  setSearchWord: Dispatch<SetStateAction<IMainState>>;
+  setSearchWord: (searchWord: string) => void;
 }
 
 class Search extends Component<IProps> {
@@ -23,7 +22,7 @@ class Search extends Component<IProps> {
 
   handleKeyUp = ({ key }: KeyboardEvent) => {
     if (key === 'Enter') {
-      this.props.setSearchWord({ searchWord: this.state.searchWord });
+      this.props.setSearchWord(this.state.searchWord);
     }
   };
 

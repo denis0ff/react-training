@@ -30,6 +30,6 @@ const validateGender = (value: string) => value !== '';
 
 const validateCountry = (value: string) => value !== '';
 
-const validateFile = (value: File | null) => value !== null && value.size <= 2 * 1024 * 1024;
+const validateFile = (value: File | null) => value && value.size <= 2 * 1024 * 1024;
 
 const validateAgree = (value: boolean) => value;
