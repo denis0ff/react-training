@@ -28,3 +28,10 @@ export interface IFilteredCharacter {
   };
   results: ICharacter[];
 }
+
+export interface CreateRequestConfig {
+  query: string;
+  onRequestData: (data: IFilteredCharacter) => void;
+  onRequestEnd?: () => void;
+  onError: (error: string) => void;
+}

@@ -1,5 +1,5 @@
 export default {
-  get: jest.fn().mockResolvedValue({
+  request: jest.fn().mockResolvedValue({
     data: {},
   }),
 };

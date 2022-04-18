@@ -7,7 +7,7 @@ const Main = () => {
 
   return (
     <>
-      <Search searchWord={searchWord} setSearchWord={setSearchWord} />
+      <Search searchWord={searchWord} setSearchWord={(value) => setSearchWord(value)} />
       <CardList searchWord={searchWord} />
     </>
   );

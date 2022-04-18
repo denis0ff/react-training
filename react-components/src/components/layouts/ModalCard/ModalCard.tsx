@@ -1,5 +1,5 @@
 import { Component, MouseEvent } from 'react';
-import { ICharacter } from '../../../utils/rickAndMorty/types';
+import { ICharacter } from '../../../api/rickAndMorty/types';
 import './ModalCard.css';
 
 interface IProps {
