@@ -10,7 +10,9 @@ const Search = ({ searchWord, setSearchWord }: Props) => {
   const [currentWord, setCurrentWord] = useState(searchWord);
 
   useEffect(() => {
-    window.localStorage.setItem('searchWord', currentWord);
+    return () => {
+      localStorage.setItem('searchWord', currentWord);
+    };
   }, [currentWord]);
 
   const handleKeyUp = useCallback(

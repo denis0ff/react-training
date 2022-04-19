@@ -20,3 +20,11 @@ export const createRequest = (config: CreateRequestConfig) => {
     })
     .finally(() => onRequestEnd && onRequestEnd());
 };
+
+/* .request<IFilteredCharacter>({
+  headers: {
+    'Content-type': 'application/json',
+    Authorization: 'Bearer tqGbf0osIS2XQ5K3YOSv',
+  },
+  baseURL: `https://the-one-api.dev/v2/character?limit=20`,
+}) */
