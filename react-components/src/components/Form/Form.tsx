@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { formFields } from '../../utils/data/formFields';
 import { FormValues, ICardGen } from '../../utils/types/types';
@@ -12,7 +11,7 @@ import Textfield from '../forms/Textfield';
 import './Form.css';
 
 interface Props {
-  setCards: Dispatch<SetStateAction<ICardGen[]>>;
+  setCards: (card: ICardGen) => void;
 }
 
 const Form = ({ setCards }: Props) => {
@@ -23,16 +22,13 @@ const Form = ({ setCards }: Props) => {
   const { isDirty, isSubmitSuccessful, errors } = formState;
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    setCards((prev) => [
-      ...prev,
-      {
-        country: data.country,
-        date: data.date,
-        fullName: data.fullName,
-        gender: data.gender,
-        image: URL.createObjectURL(data.image[0] as Blob),
-      },
-    ]);
+    setCards({
+      country: data.country,
+      date: data.date,
+      fullName: data.fullName,
+      gender: data.gender,
+      image: URL.createObjectURL(data.image[0] as Blob),
+    });
     reset();
   };
 

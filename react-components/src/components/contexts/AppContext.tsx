@@ -1,24 +1,25 @@
 import { createContext, Dispatch, FC, useReducer } from 'react';
-import { SearchWordActions, searchWordReducer } from '../../utils/reducers/appReducer';
+import { CardGenActions, cardGenReducer, dispatchActions } from '../../utils/reducers/appReducer';
+import { ICardGen } from '../../utils/types/types';
 
 type InitialStateType = {
-  searchWord: string;
+  genCards: ICardGen[];
 };
 
 const initialState = {
-  searchWord: localStorage.getItem('searchWord') || '',
+  genCards: [],
 };
 
 const AppContext = createContext<{
   state: InitialStateType;
-  dispatch: Dispatch<SearchWordActions>;
+  dispatch: Dispatch<dispatchActions>;
 }>({
   state: initialState,
   dispatch: () => null,
 });
 
-const mainReducer = ({ searchWord }: InitialStateType, action: SearchWordActions) => ({
-  searchWord: searchWordReducer(searchWord, action),
+const mainReducer = ({ genCards }: InitialStateType, action: CardGenActions) => ({
+  genCards: cardGenReducer(genCards, action),
 });
 
 const AppProvider: FC = ({ children }) => {

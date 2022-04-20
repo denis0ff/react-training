@@ -1,3 +1,5 @@
+import { ICardGen } from '../types/types';
+
 type ActionMap<M extends { [index: string]: unknown }> = {
   [Key in keyof M]: M[Key] extends undefined
     ? {
@@ -10,20 +12,27 @@ type ActionMap<M extends { [index: string]: unknown }> = {
 };
 
 export enum Actions {
-  SET_WORD = 'SET_WORD',
+  ADD = 'ADD_CARD_GEN',
 }
 
-type SearchWordPayload = {
-  [Actions.SET_WORD]: string;
+type CardGenType = ICardGen;
+
+type CardGenPayload = {
+  [Actions.ADD]: ICardGen;
 };
 
-export type SearchWordActions = ActionMap<SearchWordPayload>[keyof ActionMap<SearchWordPayload>];
+export type CardGenActions = ActionMap<CardGenPayload>[keyof ActionMap<CardGenPayload>];
 
-export const searchWordReducer = (state: string, action: SearchWordActions) => {
+export const cardGenReducer = (state: CardGenType[], action: CardGenActions) => {
   switch (action.type) {
-    case Actions.SET_WORD:
-      return action.payload;
+    case Actions.ADD: {
+      const { fullName, date, country, gender, image } = action.payload;
+      return [...state, { fullName, date, country, gender, image }];
+    }
+
     default:
       return state;
   }
 };
+
+export type dispatchActions = CardGenActions;
