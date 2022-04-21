@@ -1,31 +1,29 @@
+import { ICharacter } from '../../api/rickAndMorty/types';
 import { ICardGen } from '../types/types';
 
 type ActionMap<M extends { [index: string]: unknown }> = {
-  [Key in keyof M]: M[Key] extends undefined
-    ? {
-        type: Key;
-      }
-    : {
-        type: Key;
-        payload: M[Key];
-      };
+  [Key in keyof M]: {
+    type: Key;
+    payload: M[Key];
+  };
 };
 
 export enum Actions {
-  ADD = 'ADD_CARD_GEN',
+  ADD_GEN_CARD = 'ADD_GEN_CARD',
+  SET_MAIN_CARD = 'SET_MAIN_CARD',
 }
 
-type CardGenType = ICardGen;
+type GenCardType = ICardGen;
 
-type CardGenPayload = {
-  [Actions.ADD]: ICardGen;
+type GenCardPayload = {
+  [Actions.ADD_GEN_CARD]: ICardGen;
 };
 
-export type CardGenActions = ActionMap<CardGenPayload>[keyof ActionMap<CardGenPayload>];
+export type GenCardActions = ActionMap<GenCardPayload>[keyof ActionMap<GenCardPayload>];
 
-export const cardGenReducer = (state: CardGenType[], action: CardGenActions) => {
+export const genCardsReducer = (state: GenCardType[], action: GenCardActions) => {
   switch (action.type) {
-    case Actions.ADD: {
+    case Actions.ADD_GEN_CARD: {
       const { fullName, date, country, gender, image } = action.payload;
       return [...state, { fullName, date, country, gender, image }];
     }
@@ -35,4 +33,22 @@ export const cardGenReducer = (state: CardGenType[], action: CardGenActions) => 
   }
 };
 
-export type dispatchActions = CardGenActions;
+type MainCardType = ICharacter[];
+
+type MainCardPayload = {
+  [Actions.SET_MAIN_CARD]: ICharacter[];
+};
+
+export type MainCardActions = ActionMap<MainCardPayload>[keyof ActionMap<MainCardPayload>];
+
+export const mainCardsReducer = (state: MainCardType, action: MainCardActions) => {
+  switch (action.type) {
+    case Actions.SET_MAIN_CARD:
+      return action.payload;
+
+    default:
+      return state;
+  }
+};
+
+export type CollectedActions = GenCardActions | MainCardActions;

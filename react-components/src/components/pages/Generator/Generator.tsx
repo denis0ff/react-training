@@ -9,7 +9,7 @@ import './Generator.css';
 const Generator = () => {
   const { state, dispatch } = useContext(AppContext);
   const setCards = useCallback(
-    (card: ICardGen) => dispatch({ type: Actions.ADD, payload: { ...card } }),
+    (card: ICardGen) => dispatch({ type: Actions.ADD_GEN_CARD, payload: { ...card } }),
     [dispatch]
   );
 
