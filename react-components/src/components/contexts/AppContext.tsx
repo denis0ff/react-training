@@ -6,17 +6,21 @@ import {
   mainCardsReducer,
   GenCardActions,
   MainCardActions,
+  FilterCardActions,
+  filterCardsReducer,
 } from '../../utils/reducers/appReducer';
-import { ICardGen } from '../../utils/types/types';
+import { FilterValues, ICardGen } from '../../utils/types/types';
 
 type InitialStateType = {
   genCards: ICardGen[];
   mainCards: ICharacter[];
+  filterCards: FilterValues;
 };
 
-const initialState = {
+const initialState: InitialStateType = {
   genCards: [],
   mainCards: [],
+  filterCards: { gender: '', species: '', status: '' },
 };
 
 const AppContext = createContext<{
@@ -27,9 +31,13 @@ const AppContext = createContext<{
   dispatch: () => null,
 });
 
-const mainReducer = ({ genCards, mainCards }: InitialStateType, action: CollectedActions) => ({
+const mainReducer = (
+  { genCards, mainCards, filterCards }: InitialStateType,
+  action: CollectedActions
+) => ({
   genCards: genCardsReducer(genCards, action as GenCardActions),
   mainCards: mainCardsReducer(mainCards, action as MainCardActions),
+  filterCards: filterCardsReducer(filterCards, action as FilterCardActions),
 });
 
 const AppProvider: FC = ({ children }) => {

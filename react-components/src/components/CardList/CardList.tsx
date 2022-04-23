@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import Card from './components/Card';
 import './CardList.css';
 import { ICharacter, IFilteredCharacter } from '../../api/rickAndMorty/types';
-import { createRequest } from '../../api/rickAndMorty/utils';
+import { createRequest, getFilterUrl } from '../../api/rickAndMorty/utils';
 import ModalCard from '../layouts/ModalCard';
 import Loading from '../layouts/Loading';
 import { AppContext } from '../contexts/AppContext';
@@ -38,6 +38,13 @@ const CardList = ({ searchWord }: Props) => {
     setIsPending(true);
     isMount.current = true;
 
+    const query = getFilterUrl({
+      searchWord,
+      gender: state.filterCards.gender,
+      status: state.filterCards.status,
+      species: state.filterCards.species,
+    });
+
     const onRequestData = (data: IFilteredCharacter) => {
       if (isMount.current) setData((prev) => ({ ...prev, ...data }));
     };
@@ -51,13 +58,13 @@ const CardList = ({ searchWord }: Props) => {
       if (isMount.current) setIsPending(false);
     };
 
-    createRequest({ query: searchWord, onRequestData, onError, onRequestEnd });
+    createRequest({ query, onRequestData, onError, onRequestEnd });
 
     return () => {
       isMount.current = false;
       isFirstInit.current = false;
     };
-  }, [searchWord]);
+  }, [searchWord, state.filterCards]);
 
   useEffect(() => {
     return () => {

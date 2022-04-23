@@ -24,7 +24,7 @@
   border-color: #bd8200;
 }
 
-.form_name {
+.form_fullName {
   width: 100%;
 }
 
@@ -95,7 +95,7 @@
   font-weight: 600;
 }
 
-.form_gender {
+.form .form_gender {
   width: 0;
   height: 0;
   opacity: 0;
@@ -188,7 +188,7 @@
 }
 
 .form_submit,
-.form_name {
+.form_fullName {
   padding: 0.4em;
   border: 2px solid black;
   background-color: transparent;
@@ -196,7 +196,7 @@
 }
 
 .form_submit:hover,
-.form_name:hover,
+.form_fullName:hover,
 .form_date:hover,
 .form_country:hover {
   border-color: #00000040;

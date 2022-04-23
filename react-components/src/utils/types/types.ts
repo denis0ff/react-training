@@ -24,12 +24,12 @@ export interface FormField {
   name: string;
   label?: string;
   options?: string[];
-  register: {
+  register?: {
     validate: Partial<ValidateFunction>;
   };
 }
 
-export interface FormValues {
+export type FormValues = {
   [x: string]: string | boolean | FileList;
   agree: boolean;
   country: string;
@@ -37,11 +37,14 @@ export interface FormValues {
   gender: string;
   fullName: string;
   image: FileList;
-}
+};
 
-export interface FormInputProps {
+export type FilterValues = { [x: string]: string; gender: string; status: string; species: string };
+
+export type FormInputProps = {
   data: FormField;
   error?: string;
-  register: UseFormRegister<FormValues>;
-  clearErrors: () => void;
-}
+  register: UseFormRegister<FormValues> | UseFormRegister<FilterValues>;
+  clearErrors?: () => void;
+  setValue?: () => void;
+};

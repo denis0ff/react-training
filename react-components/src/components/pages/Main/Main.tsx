@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import CardFilter from '../../CardFilter';
 import CardList from '../../CardList/CardList';
 import Search from '../../forms/Search/Search';
 
@@ -7,8 +8,13 @@ const Main = () => {
 
   return (
     <>
-      <Search searchWord={searchWord} setSearchWord={(value) => setSearchWord(value)} />
-      <CardList searchWord={searchWord} />
+      <section>
+        <Search searchWord={searchWord} setSearchWord={(value) => setSearchWord(value)} />
+        <CardFilter />
+      </section>
+      <section>
+        <CardList searchWord={searchWord} />
+      </section>
     </>
   );
 };

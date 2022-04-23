@@ -5,12 +5,15 @@ const BASE = 'https://rickandmortyapi.com/api/';
 
 const CHARACTER = `${BASE}character/`;
 
+export const getFilterUrl = ({ searchWord, status, gender, species }: { [x: string]: string }) =>
+  `${CHARACTER}?name=${searchWord}&status=${status}&gender=${gender}&species=${species}`;
+
 export const createRequest = (config: CreateRequestConfig) => {
   const { query, onRequestData, onError, onRequestEnd } = config;
   axios
     .request<IFilteredCharacter>({
       headers: { 'Content-type': 'application/json' },
-      baseURL: `${CHARACTER}?name=${query.toLowerCase()}`,
+      baseURL: query,
     })
     .then(({ data }) => onRequestData(data))
     .catch(({ response }) => {
@@ -20,11 +23,3 @@ export const createRequest = (config: CreateRequestConfig) => {
     })
     .finally(() => onRequestEnd && onRequestEnd());
 };
-
-/* .request<IFilteredCharacter>({
-  headers: {
-    'Content-type': 'application/json',
-    Authorization: 'Bearer tqGbf0osIS2XQ5K3YOSv',
-  },
-  baseURL: `https://the-one-api.dev/v2/character?limit=20`,
-}) */
