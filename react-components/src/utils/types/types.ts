@@ -1,4 +1,5 @@
 import { UseFormRegister } from 'react-hook-form';
+import { IFilteredCharacter } from '../../api/rickAndMorty/types';
 
 export enum Paths {
   MAIN = '/',
@@ -48,3 +49,10 @@ export type FormInputProps = {
   clearErrors?: () => void;
   setValue?: () => void;
 };
+
+export interface MainPageInfo {
+  total: number;
+  current: number;
+  newPages: number;
+  pages: number;
+}

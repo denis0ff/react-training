@@ -1,10 +1,11 @@
 import { ICharacter } from '../../api/rickAndMorty/types';
-import { FilterValues, ICardGen } from '../types/types';
+import { FilterValues, ICardGen, MainPageInfo } from '../types/types';
 
 export enum Actions {
   ADD_GEN_CARD = 'ADD_GEN_CARD',
   SET_MAIN_CARD = 'SET_MAIN_CARD',
   SET_FILTER_CARD = 'SET_FILTER_CARD',
+  SET_MAIN_PAGE_INFO = 'SET_MAIN_PAGE_INFO',
 }
 
 type GenCardType = ICardGen;
@@ -17,7 +18,6 @@ export const genCardsReducer = (state: GenCardType[], action: GenCardActions) =>
       const { fullName, date, country, gender, image } = action.payload;
       return [...state, { fullName, date, country, gender, image }];
     }
-
     default:
       return state;
   }
@@ -31,7 +31,6 @@ export const mainCardsReducer = (state: MainCardType, action: MainCardActions) =
   switch (action.type) {
     case Actions.SET_MAIN_CARD:
       return action.payload;
-
     default:
       return state;
   }
@@ -45,10 +44,29 @@ export const filterCardsReducer = (state: FilterCardType, action: FilterCardActi
   switch (action.type) {
     case Actions.SET_FILTER_CARD:
       return action.payload;
-
     default:
       return state;
   }
 };
 
-export type CollectedActions = GenCardActions | MainCardActions | FilterCardActions;
+type MainPageInfoType = MainPageInfo;
+
+export type MainPageInfoActions = {
+  type: Actions.SET_MAIN_PAGE_INFO;
+  payload: Partial<MainPageInfoType>;
+};
+
+export const mainPageInfoReducer = (state: MainPageInfoType, action: MainPageInfoActions) => {
+  switch (action.type) {
+    case Actions.SET_MAIN_PAGE_INFO:
+      return { ...state, ...action.payload };
+    default:
+      return state;
+  }
+};
+
+export type CollectedActions =
+  | GenCardActions
+  | MainCardActions
+  | FilterCardActions
+  | MainPageInfoActions;

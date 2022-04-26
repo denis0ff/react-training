@@ -8,19 +8,23 @@ import {
   MainCardActions,
   FilterCardActions,
   filterCardsReducer,
+  mainPageInfoReducer,
+  MainPageInfoActions,
 } from '../../utils/reducers/appReducer';
-import { FilterValues, ICardGen } from '../../utils/types/types';
+import { FilterValues, ICardGen, MainPageInfo } from '../../utils/types/types';
 
 type InitialStateType = {
   genCards: ICardGen[];
   mainCards: ICharacter[];
   filterCards: FilterValues;
+  mainPageInfo: MainPageInfo;
 };
 
 const initialState: InitialStateType = {
   genCards: [],
   mainCards: [],
   filterCards: { gender: '', species: '', status: '' },
+  mainPageInfo: { current: 1, total: 20, newPages: 1, pages: 0 },
 };
 
 const AppContext = createContext<{
@@ -32,12 +36,13 @@ const AppContext = createContext<{
 });
 
 const mainReducer = (
-  { genCards, mainCards, filterCards }: InitialStateType,
+  { genCards, mainCards, filterCards, mainPageInfo }: InitialStateType,
   action: CollectedActions
 ) => ({
   genCards: genCardsReducer(genCards, action as GenCardActions),
   mainCards: mainCardsReducer(mainCards, action as MainCardActions),
   filterCards: filterCardsReducer(filterCards, action as FilterCardActions),
+  mainPageInfo: mainPageInfoReducer(mainPageInfo, action as MainPageInfoActions),
 });
 
 const AppProvider: FC = ({ children }) => {

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import Card from './components/Card';
 import './CardList.css';
 import { ICharacter, IFilteredCharacter } from '../../api/rickAndMorty/types';
@@ -7,6 +7,7 @@ import ModalCard from '../layouts/ModalCard';
 import Loading from '../layouts/Loading';
 import { AppContext } from '../contexts/AppContext';
 import { Actions } from '../../utils/reducers/appReducer';
+import { countPageAmount, sliceCards } from '../../utils/helpers/pagination';
 
 interface Props {
   searchWord: string;
@@ -29,12 +30,7 @@ const CardList = ({ searchWord }: Props) => {
   const hideModal = () => setData((prev: Data) => ({ ...prev, show: false }));
   const showModal = (props: ICharacter) => setData((prev) => ({ ...prev, show: true, props }));
 
-  useEffect(() => {
-    if (isFirstInit.current && state.mainCards.length)
-      return () => {
-        isFirstInit.current = false;
-      };
-
+  const updateList = useCallback(() => {
     setIsPending(true);
     isMount.current = true;
 
@@ -46,7 +42,18 @@ const CardList = ({ searchWord }: Props) => {
     });
 
     const onRequestData = (data: IFilteredCharacter) => {
-      if (isMount.current) setData((prev) => ({ ...prev, ...data }));
+      if (isMount.current) {
+        setData((prev) => ({ ...prev, ...data }));
+        const total = state.mainPageInfo.total;
+        dispatch({
+          type: Actions.SET_MAIN_PAGE_INFO,
+          payload: {
+            total,
+            newPages: countPageAmount(total, data.info.pages),
+            pages: data.info.pages,
+          },
+        });
+      }
     };
     const onError = (error: string) => {
       if (isMount.current) {
@@ -59,12 +66,21 @@ const CardList = ({ searchWord }: Props) => {
     };
 
     createRequest({ query, onRequestData, onError, onRequestEnd });
+  }, [dispatch, searchWord, state.filterCards, state.mainPageInfo.total]);
+
+  useEffect(() => {
+    if (isFirstInit.current && state.mainCards.length)
+      return () => {
+        isFirstInit.current = false;
+      };
+
+    updateList();
 
     return () => {
       isMount.current = false;
       isFirstInit.current = false;
     };
-  }, [searchWord, state.filterCards]);
+  }, [updateList]);
 
   useEffect(() => {
     return () => {
@@ -79,9 +95,11 @@ const CardList = ({ searchWord }: Props) => {
       {!data.results.length && !isPending && <h3 data-testid="not-found">{message}</h3>}
       <ul className="card_list">
         {!isPending &&
-          data.results.map((item) => (
-            <Card key={item.id + item.name} data={item} handleModal={() => showModal(item)} />
-          ))}
+          sliceCards(data.results, state.mainPageInfo.current, state.mainPageInfo.total).map(
+            (item) => (
+              <Card key={item.id + item.name} data={item} handleModal={() => showModal(item)} />
+            )
+          )}
       </ul>
     </>
   );
