@@ -3,7 +3,6 @@ import Card from './components/Card';
 import './CardList.css';
 import { ICharacter, IFilteredCharacter } from '../../api/rickAndMorty/types';
 import { createRequest, getFilterUrl } from '../../api/rickAndMorty/utils';
-import ModalCard from '../layouts/ModalCard';
 import Loading from '../layouts/Loading';
 import { AppContext } from '../contexts/AppContext';
 import { Actions } from '../../utils/reducers/appReducer';
@@ -26,9 +25,6 @@ const CardList = ({ searchWord }: Props) => {
   const [data, setData] = useState<Data>({ show: false, results: [...state.mainCards] });
   const [message, setMessage] = useState('');
   const isMount = useRef(false);
-
-  const hideModal = () => setData((prev: Data) => ({ ...prev, show: false }));
-  const showModal = (props: ICharacter) => setData((prev) => ({ ...prev, show: true, props }));
 
   const updateList = useCallback(() => {
     setIsPending(true);
@@ -53,6 +49,7 @@ const CardList = ({ searchWord }: Props) => {
             pages: data.info.pages,
           },
         });
+        dispatch({ type: Actions.SET_MAIN_CARD, payload: data.results });
       }
     };
     const onError = (error: string) => {
@@ -66,7 +63,7 @@ const CardList = ({ searchWord }: Props) => {
     };
 
     createRequest({ query, onRequestData, onError, onRequestEnd });
-  }, [dispatch, searchWord, state.filterCards, state.mainPageInfo.total]);
+  }, [dispatch, searchWord, state.filterCards]);
 
   useEffect(() => {
     if (isFirstInit.current && state.mainCards.length)
@@ -82,23 +79,14 @@ const CardList = ({ searchWord }: Props) => {
     };
   }, [updateList]);
 
-  useEffect(() => {
-    return () => {
-      dispatch({ type: Actions.SET_MAIN_CARD, payload: data.results });
-    };
-  }, [data.results, dispatch]);
-
   return (
     <>
-      <ModalCard show={data.show} data={data.props} handleClose={hideModal} />
       {isPending && <Loading />}
       {!data.results.length && !isPending && <h3 data-testid="not-found">{message}</h3>}
       <ul className="card_list">
         {!isPending &&
           sliceCards(data.results, state.mainPageInfo.current, state.mainPageInfo.total).map(
-            (item) => (
-              <Card key={item.id + item.name} data={item} handleModal={() => showModal(item)} />
-            )
+            (item) => <Card key={item.id + item.name} data={item} />
           )}
       </ul>
     </>

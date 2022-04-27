@@ -1,13 +1,12 @@
-import { Component } from 'react';
+import Breadcrumbs from '../Breadcrumbs';
 import NavBar from '../NavBar';
 import './Header.css';
 
-class Header extends Component {
-  render = () => (
-    <header className="header">
-      <NavBar />
-    </header>
-  );
-}
+const Header = () => (
+  <header className="header">
+    <NavBar />
+    <Breadcrumbs />
+  </header>
+);
 
 export default Header;

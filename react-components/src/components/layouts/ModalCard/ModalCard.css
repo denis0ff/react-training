@@ -7,8 +7,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #00000050;
   transition: opacity 100ms;
+  background-color: transparent;
+  z-index: -1;
 }
 
 .modal-card_overlay.hide {

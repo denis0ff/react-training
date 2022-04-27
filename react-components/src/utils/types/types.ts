@@ -1,5 +1,4 @@
 import { UseFormRegister } from 'react-hook-form';
-import { IFilteredCharacter } from '../../api/rickAndMorty/types';
 
 export enum Paths {
   MAIN = '/',

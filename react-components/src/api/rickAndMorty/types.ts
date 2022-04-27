@@ -31,7 +31,15 @@ export interface IFilteredCharacter {
 
 export interface CreateRequestConfig {
   query: string;
-  onRequestData: (data: IFilteredCharacter) => void;
+  onRequestData: ((data: IFilteredCharacter) => void) | ((data: ICharacter) => void);
   onRequestEnd?: () => void;
   onError: (error: string) => void;
 }
+
+export type GetAllData = {
+  query: string;
+  pages: number;
+  data: IFilteredCharacter;
+  onRequestData: (data: IFilteredCharacter) => void;
+  onError: (error: string) => void;
+};

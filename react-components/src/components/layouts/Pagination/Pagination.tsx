@@ -15,7 +15,6 @@ const Pagination = () => {
     });
 
   const handlePageNumber = (current: number) => {
-    console.log(current);
     dispatch({
       type: Actions.SET_MAIN_PAGE_INFO,
       payload: { current },
