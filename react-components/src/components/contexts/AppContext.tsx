@@ -24,7 +24,7 @@ const initialState: InitialStateType = {
   genCards: [],
   mainCards: [],
   filterCards: { gender: '', species: '', status: '' },
-  mainPageInfo: { current: 1, total: 20, newPages: 1, pages: 0 },
+  mainPageInfo: { current: 1, total: 20, newPages: 1, count: 0 },
 };
 
 const AppContext = createContext<{

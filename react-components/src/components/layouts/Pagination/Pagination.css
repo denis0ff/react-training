@@ -1,0 +1,26 @@
+.pagination {
+  display: flex;
+  padding: 1rem;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pagination_container > * {
+  padding: 0 0.2em;
+}
+
+.current-page_input,
+.total-result_input {
+  margin: 0 0.2em;
+  padding: 0.2em;
+  border: none;
+  border-bottom: 2px solid black;
+  background-color: transparent;
+}
+
+.current-page_input:focus,
+.total-result_input:focus {
+  outline: 0;
+  border-color: #bd8200;
+}

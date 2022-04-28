@@ -53,5 +53,5 @@ export interface MainPageInfo {
   total: number;
   current: number;
   newPages: number;
-  pages: number;
+  count: number;
 }

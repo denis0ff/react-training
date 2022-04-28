@@ -6,6 +6,7 @@ import { FilterValues } from '../../utils/types/types';
 import { AppContext } from '../contexts/AppContext';
 import Select from '../forms/Select';
 import Textfield from '../forms/Textfield';
+import './CardFilter.css';
 
 const CardFilter = () => {
   const { state, dispatch } = useContext(AppContext);
@@ -22,21 +23,23 @@ const CardFilter = () => {
 
   return (
     <form className="card-filter" onChange={handleSubmit(onSubmit)} onKeyPress={onKeyPress}>
-      <Select
-        data={cardFilter.status}
-        register={register}
-        setValue={() => setValue(cardFilter.status.name, state.filterCards.status)}
-      />
-      <Select
-        data={cardFilter.gender}
-        register={register}
-        setValue={() => setValue(cardFilter.gender.name, state.filterCards.gender)}
-      />
-      <Textfield
-        data={cardFilter.species}
-        register={register}
-        setValue={() => setValue(cardFilter.species.name, state.filterCards.species)}
-      />
+      <div className="form_container">
+        <Select
+          data={cardFilter.status}
+          register={register}
+          setValue={() => setValue(cardFilter.status.name, state.filterCards.status)}
+        />
+        <Select
+          data={cardFilter.gender}
+          register={register}
+          setValue={() => setValue(cardFilter.gender.name, state.filterCards.gender)}
+        />
+        <Textfield
+          data={cardFilter.species}
+          register={register}
+          setValue={() => setValue(cardFilter.species.name, state.filterCards.species)}
+        />
+      </div>
     </form>
   );
 };

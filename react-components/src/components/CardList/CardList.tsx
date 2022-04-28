@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import Card from './components/Card';
 import './CardList.css';
-import { ICharacter, IFilteredCharacter } from '../../api/rickAndMorty/types';
+import { IFilteredCharacter } from '../../api/rickAndMorty/types';
 import { createRequest, getFilterUrl } from '../../api/rickAndMorty/utils';
 import Loading from '../layouts/Loading';
 import { AppContext } from '../contexts/AppContext';
@@ -12,19 +12,51 @@ interface Props {
   searchWord: string;
 }
 
-interface Data extends Pick<IFilteredCharacter, 'results'> {
-  show: boolean;
-  props?: ICharacter;
-}
-
 const CardList = ({ searchWord }: Props) => {
   const { state, dispatch } = useContext(AppContext);
   const isFirstInit = useRef(true);
-
   const [isPending, setIsPending] = useState(false);
-  const [data, setData] = useState<Data>({ show: false, results: [...state.mainCards] });
   const [message, setMessage] = useState('');
   const isMount = useRef(false);
+
+  const totalPages = useRef(state.mainPageInfo.total);
+  const isCards = useRef(() => state.mainCards.length !== 0);
+
+  const onRequestEnd = () => {
+    if (isMount.current) setIsPending(false);
+  };
+  const onError = useCallback(
+    (error: string) => {
+      if (isMount.current) {
+        setMessage(error);
+        dispatch({ type: Actions.SET_MAIN_CARD, payload: [] });
+        dispatch({
+          type: Actions.SET_MAIN_PAGE_INFO,
+          payload: {
+            newPages: 1,
+            count: 1,
+          },
+        });
+      }
+    },
+    [dispatch]
+  );
+
+  const onRequestData = useCallback(
+    (data: IFilteredCharacter) => {
+      if (isMount.current) {
+        dispatch({ type: Actions.SET_MAIN_CARD, payload: data.results });
+        dispatch({
+          type: Actions.SET_MAIN_PAGE_INFO,
+          payload: {
+            newPages: countPageAmount(totalPages.current, data.info.count),
+            count: data.info.count,
+          },
+        });
+      }
+    },
+    [dispatch]
+  );
 
   const updateList = useCallback(() => {
     setIsPending(true);
@@ -37,41 +69,11 @@ const CardList = ({ searchWord }: Props) => {
       species: state.filterCards.species,
     });
 
-    const onRequestData = (data: IFilteredCharacter) => {
-      if (isMount.current) {
-        setData((prev) => ({ ...prev, ...data }));
-        const total = state.mainPageInfo.total;
-        dispatch({
-          type: Actions.SET_MAIN_PAGE_INFO,
-          payload: {
-            total,
-            newPages: countPageAmount(total, data.info.pages),
-            pages: data.info.pages,
-          },
-        });
-        dispatch({ type: Actions.SET_MAIN_CARD, payload: data.results });
-      }
-    };
-    const onError = (error: string) => {
-      if (isMount.current) {
-        setData((prev) => ({ ...prev, results: [] }));
-        setMessage(error);
-      }
-    };
-    const onRequestEnd = () => {
-      if (isMount.current) setIsPending(false);
-    };
-
     createRequest({ query, onRequestData, onError, onRequestEnd });
-  }, [dispatch, searchWord, state.filterCards]);
+  }, [onError, onRequestData, searchWord, state.filterCards]);
 
   useEffect(() => {
-    if (isFirstInit.current && state.mainCards.length)
-      return () => {
-        isFirstInit.current = false;
-      };
-
-    updateList();
+    if (!(isFirstInit.current && isCards.current())) updateList();
 
     return () => {
       isMount.current = false;
@@ -82,10 +84,11 @@ const CardList = ({ searchWord }: Props) => {
   return (
     <>
       {isPending && <Loading />}
-      {!data.results.length && !isPending && <h3 data-testid="not-found">{message}</h3>}
+      {!state.mainCards.length && !isPending && <h3 data-testid="not-found">{message}</h3>}
       <ul className="card_list">
         {!isPending &&
-          sliceCards(data.results, state.mainPageInfo.current, state.mainPageInfo.total).map(
+          !!state.mainCards.length &&
+          sliceCards(state.mainCards, state.mainPageInfo.current, state.mainPageInfo.total).map(
             (item) => <Card key={item.id + item.name} data={item} />
           )}
       </ul>

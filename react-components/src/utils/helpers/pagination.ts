@@ -1,9 +1,11 @@
-const DEFAULT_API_TOTAL = 20;
+type N = number;
 
-export const createPageArray = (value: number) => Array.from({ length: value }, (_, k) => k + 1);
+export const createPageArray = (value: N) => Array.from({ length: value }, (_, k) => k + 1);
 
-export const countPageAmount = (total: number, pages: number) =>
-  (pages * DEFAULT_API_TOTAL) / total;
+export const countPageAmount = (total: N, count: N) => Math.ceil(count / total);
+
+export const countCurrent = (current: N, pagesBefore: N, pages: N) =>
+  Math.ceil((current * pages) / pagesBefore);
 
 export const countPage = (total: number, current: number) =>
   Math.ceil((current * total) / total).toString();

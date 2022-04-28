@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CreateRequestConfig, GetAllData, ICharacter, IFilteredCharacter } from './types';
+import { CreateRequestConfig, GetAllData } from './types';
 
 const BASE = 'https://rickandmortyapi.com/api/';
 
@@ -10,8 +10,6 @@ export const getFilterUrl = ({ searchWord, status, gender, species }: { [x: stri
 
 export const createRequest = (config: CreateRequestConfig) => {
   const { query, onRequestData, onError, onRequestEnd } = config;
-  if (isNaN(+query.replace(CHARACTER, ''))) type T = IFilteredCharacter;
-  type D = (data: T) => void;
 
   axios
     .request({
@@ -20,18 +18,15 @@ export const createRequest = (config: CreateRequestConfig) => {
     })
 
     .then(({ data }) => {
-      if (data.info) {
-        const onRequestDataTypezed = onRequestData as D;
-        data.info.next
-          ? getAllData({
-              query,
-              pages: data.info.pages,
-              data,
-              onRequestData: onRequestDataTypezed,
-              onError,
-            })
-          : onRequestData(data);
-      } else onRequestData(data);
+      data.info.next
+        ? getAllData({
+            query,
+            pages: data.info.pages,
+            data,
+            onRequestData,
+            onError,
+          })
+        : onRequestData(data);
     })
 
     .catch(({ response }) => {
@@ -51,5 +46,7 @@ const getAllData = ({ query, pages, data, onRequestData, onError }: GetAllData) 
     .then((resolvedArray) =>
       resolvedArray.forEach(({ data }) => (results = [...results, ...data.results]))
     )
-    .then(() => onRequestData({ ...data, results }));
+    .catch(() => onError('Wooops! Something went wrong'))
+    .then(() => onRequestData({ ...data, results }))
+    .catch(() => onError('Wooops! Something went wrong'));
 };
