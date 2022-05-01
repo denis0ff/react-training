@@ -48,10 +48,3 @@ export type FormInputProps = {
   clearErrors?: () => void;
   setValue?: () => void;
 };
-
-export interface MainPageInfo {
-  total: number;
-  current: number;
-  newPages: number;
-  count: number;
-}

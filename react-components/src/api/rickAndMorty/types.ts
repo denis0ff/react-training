@@ -19,28 +19,30 @@ export interface ICharacter {
   created: string;
 }
 
-export interface IFilteredCharacter {
-  info: {
-    count: number;
-    pages: number;
-    next: string | null;
-    prev: string | null;
-  };
-  results: ICharacter[];
-}
+export type Info = {
+  count: number;
+  pages: number;
+  next: string | null;
+  prev: string | null;
+};
 
-export interface CreateRequestConfig {
-  query: string;
-  onRequestData: (data: IFilteredCharacter) => void;
-  onRequestEnd?: () => void;
-  onError: (error: string) => void;
-  needAllData?: boolean;
+export interface IFilteredCharacter {
+  info: Info;
+  results: ICharacter[];
 }
 
 export type GetAllData = {
   query: string;
   pages: number;
   data: IFilteredCharacter;
-  onRequestData: (data: IFilteredCharacter) => void;
-  onError: (error: string) => void;
+};
+
+export type CharacterInfo = {
+  count: number;
+  pages: number;
+  next: string | null;
+  prev: string | null;
+  total: number;
+  current: number;
+  newPages: number;
 };

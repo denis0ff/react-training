@@ -1,26 +1,18 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
+import { filterMainCardsSlice } from '../../../store/reducers/FilterMainCardsSlice';
 import './Search.css';
 
-interface Props {
-  searchWord: string;
-  setSearchWord: (value: string) => void;
-}
+const Search = () => {
+  const { searchWord } = useAppSelector((state) => state.filterMainCardsReducer);
+  const { setSearchWord } = filterMainCardsSlice.actions;
+  const dispatch = useAppDispatch();
 
-const Search = ({ searchWord, setSearchWord }: Props) => {
   const [currentWord, setCurrentWord] = useState(searchWord);
 
   useEffect(() => {
-    return () => {
-      localStorage.setItem('searchWord', currentWord);
-    };
-  }, [currentWord]);
-
-  const handleKeyUp = useCallback(
-    ({ key }) => {
-      if (key === 'Enter') setSearchWord(currentWord);
-    },
-    [setSearchWord, currentWord]
-  );
+    dispatch(setSearchWord(currentWord));
+  }, [currentWord, dispatch, setSearchWord]);
 
   return (
     <div className="search_wrapper">
@@ -34,7 +26,6 @@ const Search = ({ searchWord, setSearchWord }: Props) => {
         placeholder="Search..."
         value={currentWord || ''}
         onChange={({ target: { value } }) => setCurrentWord(value)}
-        onKeyUp={handleKeyUp}
       />
     </div>
   );

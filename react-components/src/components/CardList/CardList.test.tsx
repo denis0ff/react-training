@@ -38,13 +38,13 @@ const getResolve = (word: string) => ({
 describe('Card list', () => {
   it('show loader while fetching data', async () => {
     mockCall(emptyResults.data);
-    render(<CardList searchWord={emptyResults.searchWord} />);
+    render(<CardList />);
     expect(screen.getByTestId(/loader/i)).toBeInTheDocument();
   });
 
   it('fetches and renders data with empty search word', async () => {
     mockCall(emptyResults.data);
-    render(<CardList searchWord={emptyResults.searchWord} />);
+    render(<CardList />);
     expect(screen.getByTestId(/loader/i)).toBeInTheDocument();
     await waitForElementToBeRemoved(screen.getByTestId(/loader/i));
 
@@ -60,7 +60,7 @@ describe('Card list', () => {
 
   it('fetches and renders data with some search word', async () => {
     mockCall(mortyResults.data);
-    render(<CardList searchWord={mortyResults.searchWord} />);
+    render(<CardList />);
     expect(screen.getByTestId(/loader/i)).toBeInTheDocument();
     await waitForElementToBeRemoved(screen.getByTestId(/loader/i));
 
@@ -76,7 +76,7 @@ describe('Card list', () => {
 
   it('render error when data was not found', async () => {
     mockCall(incorrectResults.data);
-    render(<CardList searchWord={incorrectResults.searchWord} />);
+    render(<CardList />);
     expect(screen.getByTestId(/loader/i)).toBeInTheDocument();
     await waitForElementToBeRemoved(screen.getByTestId(/loader/i));
 
