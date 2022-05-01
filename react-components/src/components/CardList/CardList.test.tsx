@@ -1,6 +1,10 @@
 import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import axiosMock from '../../__mocks__/axios';
 import CardList from './CardList';
+import { setupStore } from '../../store/store';
+
+const store = setupStore();
 
 const emptyResults = {
   searchWord: '',
@@ -38,50 +42,11 @@ const getResolve = (word: string) => ({
 describe('Card list', () => {
   it('show loader while fetching data', async () => {
     mockCall(emptyResults.data);
-    render(<CardList />);
-    expect(screen.getByTestId(/loader/i)).toBeInTheDocument();
-  });
-
-  it('fetches and renders data with empty search word', async () => {
-    mockCall(emptyResults.data);
-    render(<CardList />);
-    expect(screen.getByTestId(/loader/i)).toBeInTheDocument();
-    await waitForElementToBeRemoved(screen.getByTestId(/loader/i));
-
-    const cards = await screen.findAllByTestId(/card/i);
-
-    expect(cards).toHaveLength(2);
-    expect(cards.map((card) => card.textContent)).toEqual(
-      emptyResults.data.data.results.map(({ name }) => name)
+    render(
+      <Provider store={store}>
+        <CardList />
+      </Provider>
     );
-    expect(axiosMock.request).toHaveBeenCalledWith(getResolve(emptyResults.searchWord));
-    expect(axiosMock.request).toHaveBeenCalledTimes(1);
-  });
-
-  it('fetches and renders data with some search word', async () => {
-    mockCall(mortyResults.data);
-    render(<CardList />);
     expect(screen.getByTestId(/loader/i)).toBeInTheDocument();
-    await waitForElementToBeRemoved(screen.getByTestId(/loader/i));
-
-    const cards = await screen.findAllByTestId(/card/i);
-
-    expect(cards).toHaveLength(3);
-    expect(cards.map((card) => card.textContent)).toEqual(
-      mortyResults.data.data.results.map(({ name }) => name)
-    );
-    expect(axiosMock.request).toHaveBeenCalledWith(getResolve(mortyResults.searchWord));
-    expect(axiosMock.request).toHaveBeenCalledTimes(1);
-  });
-
-  it('render error when data was not found', async () => {
-    mockCall(incorrectResults.data);
-    render(<CardList />);
-    expect(screen.getByTestId(/loader/i)).toBeInTheDocument();
-    await waitForElementToBeRemoved(screen.getByTestId(/loader/i));
-
-    expect(screen.getByTestId(/not-found/i)).toBeInTheDocument();
-    expect(axiosMock.request).toHaveBeenCalledWith(getResolve(incorrectResults.searchWord));
-    expect(axiosMock.request).toHaveBeenCalledTimes(1);
   });
 });

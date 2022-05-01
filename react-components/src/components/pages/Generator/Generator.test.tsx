@@ -1,6 +1,11 @@
 import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import CardGen from '../../CardGen';
 import Generator from './Generator';
+
+import { setupStore } from '../../../store/store';
+
+const store = setupStore();
 
 const cards = [
   {
@@ -21,7 +26,11 @@ const cards = [
 
 describe('Generator page', () => {
   it('generator render', () => {
-    render(<Generator />);
+    render(
+      <Provider store={store}>
+        <Generator />
+      </Provider>
+    );
     expect(screen.getByRole('heading')).toBeInTheDocument();
     expect(screen.getByRole('heading')).toHaveTextContent(/card generator/i);
     expect(screen.getByRole('textbox')).toBeInTheDocument();
