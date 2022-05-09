@@ -9,7 +9,7 @@ const MainCard = () => {
   const { cardId } = useParams();
   const { state } = useContext(AppContext);
   const navigate = useNavigate();
-  const [data] = state.mainCards.filter(({ id }) => id === Number(cardId));
+  const [data] = state.mainPageInfo.results.filter(({ id }) => id === Number(cardId));
   const shouldRedirect = useRef(false);
   const navigateMain = useCallback(() => navigate(Paths.MAIN), [navigate]);
 

@@ -1,5 +1,5 @@
-import { useContext, useState } from 'react';
-import { countCurrent, countPageAmount, createPageArray } from '../../../utils/helpers/pagination';
+import { useContext } from 'react';
+import { createPageArray } from '../../../utils/helpers/pagination';
 import { Actions } from '../../../utils/reducers/appReducer';
 import { AppContext } from '../../contexts/AppContext';
 import './Pagination.css';
@@ -8,23 +8,17 @@ const totalOptions = [1, 2, 4, 5, 10, 20];
 
 const Pagination = () => {
   const { state, dispatch } = useContext(AppContext);
-  const [currentPage, setCurrentPage] = useState(state.mainPageInfo.current);
 
   const handleTotalResults = (total: number) => {
-    const newPages = countPageAmount(total, state.mainPageInfo.count);
-    const current = countCurrent(state.mainPageInfo.current, state.mainPageInfo.newPages, newPages);
-    setCurrentPage(current);
-
     dispatch({
-      type: Actions.SET_MAIN_PAGE_INFO,
-      payload: { total, newPages, current },
+      type: Actions.SET_MAIN_PAGE_TOTAL,
+      payload: { total },
     });
   };
 
   const handlePageNumber = (current: number) => {
-    setCurrentPage(current);
     dispatch({
-      type: Actions.SET_MAIN_PAGE_INFO,
+      type: Actions.SET_MAIN_PAGE_CURRENT,
       payload: { current },
     });
   };
@@ -36,7 +30,7 @@ const Pagination = () => {
           Page
           <select
             className="current-page_input"
-            value={currentPage}
+            value={state.mainPageInfo.current}
             onChange={({ target }) => handlePageNumber(+target.value)}
           >
             {createPageArray(state.mainPageInfo.newPages).map((item) => (
