@@ -207,3 +207,9 @@
   border-color: #00000040;
   cursor: no-drop;
 }
+
+.upload-file {
+  color: #bd8200;
+  font-weight: 600;
+  font-size: 0.8em;
+}
