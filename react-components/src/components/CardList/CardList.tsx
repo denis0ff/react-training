@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Card from './components/Card';
 import './CardList.css';
 import { ICharacter, IFilteredCharacter } from '../../api/rickAndMorty/types';
@@ -11,46 +11,41 @@ interface Props {
 }
 
 interface Data extends Partial<IFilteredCharacter> {
-  show: boolean;
   props?: ICharacter;
 }
 
 const CardList = ({ searchWord }: Props) => {
   const [isPending, setIsPending] = useState(true);
-  const [data, setData] = useState<Data>({ show: false });
+  const [data, setData] = useState<Data>({});
+  const [modal, setModal] = useState(false);
   const [message, setMessage] = useState('');
-  const isMount = useRef(false);
 
-  const hideModal = () => setData((prev: Data) => ({ ...prev, show: false }));
-  const showModal = (props: ICharacter) => setData((prev) => ({ ...prev, show: true, props }));
+  const hideModal = () => setModal(false);
+  const showModal = (props: ICharacter) => {
+    setData((prev) => ({ ...prev, props }));
+    setModal(true);
+  };
 
   useEffect(() => {
     setIsPending(true);
-    isMount.current = true;
 
     const onRequestData = (data: IFilteredCharacter) => {
-      if (isMount.current) setData((prev) => ({ ...prev, ...data }));
+      setData((prev) => ({ ...prev, ...data }));
     };
     const onError = (error: string) => {
-      if (isMount.current) {
-        setData((prev) => ({ ...prev, results: undefined }));
-        setMessage(error);
-      }
+      setData((prev) => ({ ...prev, results: undefined }));
+      setMessage(error);
     };
     const onRequestEnd = () => {
-      if (isMount.current) setIsPending(false);
+      setIsPending(false);
     };
 
     createRequest({ query: searchWord, onRequestData, onError, onRequestEnd });
-
-    return () => {
-      isMount.current = false;
-    };
   }, [searchWord]);
 
   return (
     <>
-      <ModalCard show={data.show} data={data.props} handleClose={hideModal} />
+      <ModalCard show={modal} data={data.props} handleClose={hideModal} />
       {isPending && <Loading />}
       {!data.results && !isPending && <h3 data-testid="not-found">{message}</h3>}
       <ul className="card_list">
