@@ -3,7 +3,7 @@ import Card from './components/Card';
 import './CardList.css';
 import Loading from '../layouts/Loading';
 import { useAppSelector, useAppDispatch } from '../../hooks/redux';
-import { fetchCharacters } from '../../store/reducers/ActionCreators';
+import { fetchCharacters } from '../../store/thunks/ActionCreators';
 import { getFilterUrl } from '../../api/rickAndMorty/utils';
 
 const CardList = () => {

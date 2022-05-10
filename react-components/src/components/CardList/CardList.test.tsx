@@ -1,4 +1,4 @@
-import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import axiosMock from '../../__mocks__/axios';
 import CardList from './CardList';
@@ -33,11 +33,6 @@ const mockCall = (data: typeof emptyResults.data | typeof incorrectResults.data)
   });
 
 afterEach(() => axiosMock.request.mockClear());
-
-const getResolve = (word: string) => ({
-  baseURL: `https://rickandmortyapi.com/api/character/?name=${word}`,
-  headers: { 'Content-type': 'application/json' },
-});
 
 describe('Card list', () => {
   it('show loader while fetching data', async () => {

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ICharacter, CharacterInfo, IFilteredCharacter } from '../../api/rickAndMorty/types';
 import { countPageAmount, sliceCards } from '../../utils/helpers/pagination';
-import { fetchCharacters } from './ActionCreators';
+import { fetchCharacters } from '../thunks/ActionCreators';
 
 interface MainCardsState {
   info: CharacterInfo;
